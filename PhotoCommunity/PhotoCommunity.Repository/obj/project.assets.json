@@ -687,11 +687,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "E:\\Test\\PhotoCommunity\\PhotoCommunity.Repository\\PhotoCommunity.Repository.csproj",
+      "projectUniqueName": "E:\\my\\myTest2\\PhotoCommunity\\PhotoCommunity.Repository\\PhotoCommunity.Repository.csproj",
       "projectName": "PhotoCommunity.Repository",
-      "projectPath": "E:\\Test\\PhotoCommunity\\PhotoCommunity.Repository\\PhotoCommunity.Repository.csproj",
+      "projectPath": "E:\\my\\myTest2\\PhotoCommunity\\PhotoCommunity.Repository\\PhotoCommunity.Repository.csproj",
       "packagesPath": "C:\\Users\\ThinkPad\\.nuget\\packages\\",
-      "outputPath": "E:\\Test\\PhotoCommunity\\PhotoCommunity.Repository\\obj\\",
+      "outputPath": "E:\\my\\myTest2\\PhotoCommunity\\PhotoCommunity.Repository\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"

@@ -11541,11 +11541,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "E:\\Test\\PhotoCommunity\\PhotoCommunity.Web\\PhotoCommunity.Web.csproj",
+      "projectUniqueName": "E:\\my\\myTest2\\PhotoCommunity\\PhotoCommunity.Web\\PhotoCommunity.Web.csproj",
       "projectName": "PhotoCommunity.Web",
-      "projectPath": "E:\\Test\\PhotoCommunity\\PhotoCommunity.Web\\PhotoCommunity.Web.csproj",
+      "projectPath": "E:\\my\\myTest2\\PhotoCommunity\\PhotoCommunity.Web\\PhotoCommunity.Web.csproj",
       "packagesPath": "C:\\Users\\ThinkPad\\.nuget\\packages\\",
-      "outputPath": "E:\\Test\\PhotoCommunity\\PhotoCommunity.Web\\obj\\",
+      "outputPath": "E:\\my\\myTest2\\PhotoCommunity\\PhotoCommunity.Web\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
@@ -11566,11 +11566,11 @@
       "frameworks": {
         "netcoreapp2.1": {
           "projectReferences": {
-            "E:\\Test\\PhotoCommunity\\PhotoCommunity.Repository\\PhotoCommunity.Repository.csproj": {
-              "projectPath": "E:\\Test\\PhotoCommunity\\PhotoCommunity.Repository\\PhotoCommunity.Repository.csproj"
+            "E:\\my\\myTest2\\PhotoCommunity\\PhotoCommunity.Repository\\PhotoCommunity.Repository.csproj": {
+              "projectPath": "E:\\my\\myTest2\\PhotoCommunity\\PhotoCommunity.Repository\\PhotoCommunity.Repository.csproj"
             },
-            "E:\\Test\\PhotoCommunity\\PhotoCommunity.Service\\PhotoCommunity.Service.csproj": {
-              "projectPath": "E:\\Test\\PhotoCommunity\\PhotoCommunity.Service\\PhotoCommunity.Service.csproj"
+            "E:\\my\\myTest2\\PhotoCommunity\\PhotoCommunity.Service\\PhotoCommunity.Service.csproj": {
+              "projectPath": "E:\\my\\myTest2\\PhotoCommunity\\PhotoCommunity.Service\\PhotoCommunity.Service.csproj"
             }
           }
         }

@@ -5,10 +5,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="DbContent\" />
-    <Folder Include="Entity\" />
-    <Folder Include="Repository\" />
-    <Folder Include="Migrations\" />
+    <PackageReference Include="Dapper" Version="1.50.5" />
+    <PackageReference Include="Pomelo.EntityFrameworkCore.MySql" Version="2.1.4" />
   </ItemGroup>
 
 </Project>

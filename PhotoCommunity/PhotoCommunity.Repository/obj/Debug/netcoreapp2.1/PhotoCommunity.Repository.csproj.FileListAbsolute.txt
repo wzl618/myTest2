@@ -1,0 +1,9 @@
+E:\my\myTest2\PhotoCommunity\PhotoCommunity.Repository\bin\Debug\netcoreapp2.1\PhotoCommunity.Repository.deps.json
+E:\my\myTest2\PhotoCommunity\PhotoCommunity.Repository\bin\Debug\netcoreapp2.1\PhotoCommunity.Repository.dll
+E:\my\myTest2\PhotoCommunity\PhotoCommunity.Repository\obj\Debug\netcoreapp2.1\PhotoCommunity.Repository.csprojAssemblyReference.cache
+E:\my\myTest2\PhotoCommunity\PhotoCommunity.Repository\obj\Debug\netcoreapp2.1\PhotoCommunity.Repository.csproj.CoreCompileInputs.cache
+E:\my\myTest2\PhotoCommunity\PhotoCommunity.Repository\obj\Debug\netcoreapp2.1\PhotoCommunity.Repository.AssemblyInfoInputs.cache
+E:\my\myTest2\PhotoCommunity\PhotoCommunity.Repository\obj\Debug\netcoreapp2.1\PhotoCommunity.Repository.AssemblyInfo.cs
+E:\my\myTest2\PhotoCommunity\PhotoCommunity.Repository\bin\Debug\netcoreapp2.1\PhotoCommunity.Repository.pdb
+E:\my\myTest2\PhotoCommunity\PhotoCommunity.Repository\obj\Debug\netcoreapp2.1\PhotoCommunity.Repository.dll
+E:\my\myTest2\PhotoCommunity\PhotoCommunity.Repository\obj\Debug\netcoreapp2.1\PhotoCommunity.Repository.pdb

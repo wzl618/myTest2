@@ -1,0 +1,172 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>PhotoCommunity.Web</name>
+    </assembly>
+    <members>
+        <member name="T:PhotoCommunity.Web.Api.ArticleController">
+            <summary>
+            文章
+            </summary>
+        </member>
+        <member name="M:PhotoCommunity.Web.Api.ArticleController.#ctor(UEditor.Core.UEditorService)">
+            <summary>
+            构造函数注入
+            </summary>
+            <param name="uEditorService"></param>
+        </member>
+        <member name="M:PhotoCommunity.Web.Api.ArticleController.Upload">
+            <summary>
+            上传
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:PhotoCommunity.Web.Api.TagController">
+            <summary>
+            标签
+            </summary>
+        </member>
+        <member name="M:PhotoCommunity.Web.Api.TagController.#ctor(PhotoCommunity.Service.ITagService)">
+            <summary>
+            构造函数注入
+            </summary>
+            <param name="tagService"></param>
+        </member>
+        <member name="M:PhotoCommunity.Web.Api.TagController.AddTag(PhotoCommunity.Web.Models.Request.AddTagRequest)">
+            <summary>
+            增加标签
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:PhotoCommunity.Web.Api.TagController.DeleteTag(System.Int64)">
+            <summary>
+            删除标签
+            </summary>
+            <param name="tagId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:PhotoCommunity.Web.Api.TagController.UpdateTag(PhotoCommunity.Web.Models.Request.TagRequest)">
+            <summary>
+            更新标签
+            </summary>
+            <param name="request"></param>
+        </member>
+        <member name="M:PhotoCommunity.Web.Api.TagController.GetAllTag">
+            <summary>
+            获取所有标签数据
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:PhotoCommunity.Web.Api.UserController">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:PhotoCommunity.Web.Api.UserController.#ctor(PhotoCommunity.Service.IUserService)">
+            <summary>
+            构造函数注入
+            </summary>
+            <param name="userService"></param>
+        </member>
+        <member name="M:PhotoCommunity.Web.Api.UserController.UserRegister(PhotoCommunity.Web.Models.Request.UserRegisterRequest)">
+            <summary>
+            用户注册
+            </summary>
+            <param name="request"></param>
+            <returns></returns>
+        </member>
+        <member name="M:PhotoCommunity.Web.Api.UserController.UserLogin(PhotoCommunity.Web.Models.Request.UserLoginRequest)">
+            <summary>
+            用户登录
+            </summary>
+            <param name="request"></param>
+            <returns></returns>
+        </member>
+        <member name="M:PhotoCommunity.Web.Api.UserController.UserLoginOut">
+            <summary>
+            用户登出
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:PhotoCommunity.Web.DefaultProfile">
+            <summary>
+            AutoMap配置
+            </summary>
+        </member>
+        <member name="M:PhotoCommunity.Web.DefaultProfile.#ctor">
+            <summary>
+            Web层需要用到的AutoMap配置
+            </summary>
+        </member>
+        <member name="T:PhotoCommunity.Web.Models.Request.AddTagRequest">
+            <summary>
+            增加标签Request
+            </summary>
+        </member>
+        <member name="P:PhotoCommunity.Web.Models.Request.AddTagRequest.TagName">
+            <summary>
+            标签名称
+            </summary>
+        </member>
+        <member name="T:PhotoCommunity.Web.Models.Request.TagRequest">
+            <summary>
+            标签请求Request
+            </summary>
+        </member>
+        <member name="P:PhotoCommunity.Web.Models.Request.TagRequest.Id">
+            <summary>
+            标签Id
+            </summary>
+        </member>
+        <member name="P:PhotoCommunity.Web.Models.Request.TagRequest.TagName">
+            <summary>
+            标签名称
+            </summary>
+        </member>
+        <member name="T:PhotoCommunity.Web.Models.Request.UserLoginRequest">
+            <summary>
+            用户登录Request
+            </summary>
+        </member>
+        <member name="P:PhotoCommunity.Web.Models.Request.UserLoginRequest.UserName">
+            <summary>
+            用户名
+            </summary>
+        </member>
+        <member name="P:PhotoCommunity.Web.Models.Request.UserLoginRequest.Password">
+            <summary>
+            密码
+            </summary>
+        </member>
+        <member name="T:PhotoCommunity.Web.Models.Request.UserRegisterRequest">
+            <summary>
+            用户注册Request
+            </summary>
+        </member>
+        <member name="P:PhotoCommunity.Web.Models.Request.UserRegisterRequest.UserName">
+            <summary>
+            用户名
+            </summary>
+        </member>
+        <member name="P:PhotoCommunity.Web.Models.Request.UserRegisterRequest.Password">
+            <summary>
+            密码
+            </summary>
+        </member>
+        <member name="T:PhotoCommunity.Web.Models.Response.TagResponse">
+            <summary>
+            标签Response
+            </summary>
+        </member>
+        <member name="P:PhotoCommunity.Web.Models.Response.TagResponse.Id">
+            <summary>
+            标签Id
+            </summary>
+        </member>
+        <member name="P:PhotoCommunity.Web.Models.Response.TagResponse.TagName">
+            <summary>
+            标签名称
+            </summary>
+        </member>
+    </members>
+</doc>

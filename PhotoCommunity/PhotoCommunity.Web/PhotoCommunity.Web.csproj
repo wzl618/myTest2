@@ -4,17 +4,26 @@
     <TargetFramework>netcoreapp2.1</TargetFramework>
   </PropertyGroup>
 
-  <ItemGroup>
-    <PackageReference Include="Microsoft.AspNetCore.App" />
-  </ItemGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <DocumentationFile>bin\Debug\netcoreapp2.1\PhotoCommunity.Web.xml</DocumentationFile>
+  </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Api\" />
+    <PackageReference Include="AutoMapper" Version="8.0.0" />
+    <PackageReference Include="Microsoft.AspNetCore.App" />
+    <PackageReference Include="Microsoft.Extensions.PlatformAbstractions" Version="1.1.0" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.1.1" />
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="3.0.0" />
+    <PackageReference Include="UEditor.Core" Version="1.0.6" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\PhotoCommunity.Repository\PhotoCommunity.Repository.csproj" />
     <ProjectReference Include="..\PhotoCommunity.Service\PhotoCommunity.Service.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="upload\" />
   </ItemGroup>
 
 </Project>

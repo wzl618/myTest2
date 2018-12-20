@@ -1,0 +1,20 @@
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Text;
+
+namespace PhotoCommunity.Repository.Entity
+{
+    /// <summary>
+    /// 大类
+    /// </summary>
+    [Table("class")]
+    public class Class
+    {
+        public long Id { get; set; }
+        /// <summary>
+        /// 大类名称
+        /// </summary>
+        public string ClassName { get; set; }
+    }
+}

@@ -2,26 +2,79 @@
 <html>
 <head>
     <meta charset="utf-8" />
-    <title></title>
-    
-    
+    <title></title> 
+    <style type="text/css">
+        [v-cloak] {
+            display: none;
+        }
+    </style>
 </head>
 <body>
-
     <div class="row">
         <div class="col-md-6">
             <script id="container" name="container" type="text/plain">
                 欢迎使用Ueditor.Core
             </script>
         </div>
-        <div class="col-md-6"></div>
+        <div class="col-md-6">
+        </div>
+    </div>
+    <div id="app">
+        <select id="tagList" name="tagList">
+            <option v-for="tag in tagList" v-bind:value="tag.id">{{tag.tagName}}</option>
+        </select>
+        <button v-on:click=" post">上传</button>
     </div>
     <script src="../lib/ueditor/ueditor.config.js"></script>
     <script src="../lib/ueditor/ueditor.all.min.js"></script>
+    <script src="/js/vue.js" language="javascript"></script>
+    <script src="/js/vue-resource.js" language="javascript"></script>
     <script type="text/javascript">
         var ue = UE.getEditor('container', {
             initialFrameHeight: 250
         });
+        window.onload = function () {
+            var app = new Vue({
+                el: '#app',
+                data: {
+                    textContent: "",
+                    Context: "",
+                    tagList:[]
+                },
+                methods: {
+                    post: function () {
+                        app.textContent = UE.getEditor('container').getContentTxt(),
+                            app.Context = UE.getEditor('container').getContent(),
+                            this.$http.post('/api/article/SaveImageNameAndText', {
+                                "source": this.$data.Context,
+                                "textContent": this.$data.textContent
+                            })
+                                .then(
+                                    function (res) {
+                                        alert('上传成功');
+                                    },
+                                    function () {
+                                        alert('上传失败');   //失败处理
+                                    });
+                    },
+
+                      //发送get请求
+                    get: function () {
+                        this.$http.get("/api/tag/GetAllTag", {})
+                            .then(
+                                function (res) {
+                                    this.$data.tagList = res.body;
+                                    console.log(this.$data.list);
+                                },
+                                function () {
+                                    alert("请求发送失败");
+                                }
+                            );
+                    }
+                }
+            });
+            app.get();
+        }
     </script>
 </body>
 </html>

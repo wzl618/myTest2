@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using PhotoCommunity.Web.Models.Request;
 using UEditor.Core;
 
 namespace PhotoCommunity.Web.Api
@@ -35,6 +37,38 @@ namespace PhotoCommunity.Web.Api
         {
             var response = _ueditorService.UploadAndGetResponse(HttpContext);
             return Content(response.Result, response.ContentType);
+        }
+
+        /// <summary>
+        /// 保存图片名称及文字
+        /// </summary>
+        /// <param name="source"></param>
+        /// <param name="request"></param>
+        /// <returns></returns>
+        [Route("SaveImageNameAndText")]
+        [HttpPost]
+        public bool SaveImageNameAndText(SaveImageNameAndTextRequest request)
+        {
+            IList<string> srcArr = new List<string>();
+
+            var txt = request.TextContent.Trim();
+
+            string[] strs = txt.Split("\n");
+
+            var title = strs[0];
+            var context = strs[1].Trim();
+
+            string strRegExPattern = @"<img[^>]+(src)\s*=\s*""?([^ "">]+)""?(?:[^>]+(width|height)\s*=\s*""?([^ "">]+)""?\s+(height|width)\s*=\s*""?([^ "">]+)""?)?(?:[^>]+(alt)\s*=\s*""?([^"">]+)""?)?";
+
+            Regex re = new Regex(strRegExPattern, RegexOptions.IgnoreCase);
+            Match m = re.Match(request.Source);
+
+            while (m.Success)
+            {
+                srcArr.Add(m.Groups[2].Value);
+                m = m.NextMatch();
+            }
+            return true;
         }
 
     }

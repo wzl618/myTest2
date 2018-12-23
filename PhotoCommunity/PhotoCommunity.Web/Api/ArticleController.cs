@@ -5,6 +5,8 @@ using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using PhotoCommunity.Service;
+using PhotoCommunity.Service.Model;
 using PhotoCommunity.Web.Models.Request;
 using UEditor.Core;
 
@@ -18,13 +20,16 @@ namespace PhotoCommunity.Web.Api
     public class ArticleController : ControllerBase
     {
         private UEditorService _ueditorService;
+        private IArticleService _articleService;
         /// <summary>
         /// 构造函数注入
         /// </summary>
         /// <param name="uEditorService"></param>
-        public ArticleController(UEditorService uEditorService)
+        /// <param name="articleService"></param>
+        public ArticleController(UEditorService uEditorService, IArticleService articleService)
         {
             _ueditorService = uEditorService;
+            _articleService = articleService;
         }
 
         /// <summary>
@@ -69,6 +74,17 @@ namespace PhotoCommunity.Web.Api
                 m = m.NextMatch();
             }
             return true;
+        }
+
+        /// <summary>
+        /// 添加文章
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
+        [Route("AddArticle")]
+        [HttpPost]
+        public bool AddArticle(AddArticleRequest request) {
+            return _articleService.AddArticle(AutoMapper.Mapper.Map<ArticleModel>(request));
         }
 
     }

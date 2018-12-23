@@ -9,6 +9,7 @@ namespace PhotoCommunity.Repository.Entity
     [Table("tag")]
     public class Tag
     {
+        [Key]
         public long Id { get; set; }
         /// <summary>
         /// 标签名称

@@ -16,7 +16,7 @@ namespace PhotoCommunity.Web
     public class DefaultProfile: Profile
     {
         /// <summary>
-        /// Web层需要用到的AutoMap配置
+        /// Web层及Service需要用到的AutoMap配置
         /// </summary>
         public DefaultProfile() {
 
@@ -29,6 +29,16 @@ namespace PhotoCommunity.Web
             CreateMap<Tag,TagModel>();
             CreateMap<TagRequest,TagModel>();
             CreateMap<TagModel,TagResponse>();
+
+            //文章
+            CreateMap<AddArticleRequest,ArticleModel>();
+            //图片
+            CreateMap<AddPhotoRequest,PhotoModel>();
+
+            //大类
+            CreateMap<Class,ClassModel>();
+            CreateMap<ClassRequest,ClassModel>();
+            CreateMap<ClassModel,ClassResponse>();
 
         }
     }

@@ -73,10 +73,14 @@ namespace PhotoCommunity.Web
             //注入服务
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<ITagService, TagService>();
+            services.AddScoped<IArticleService, ArticleService>();
+            services.AddScoped<IClassService,ClassService>();
 
             //注入Repository
             services.AddScoped<IUserRepository,UserRepository>();
             services.AddScoped<ITagRepository, TagRepository>();
+            services.AddScoped<IArticleRepository, ArticleRepository>();
+            services.AddScoped<IClassRepository,ClassRepository>();
 
             //注入editor
             services.AddUEditorService();

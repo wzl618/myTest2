@@ -12,6 +12,7 @@ namespace PhotoCommunity.Repository.Entity
     [Table("commment")]
     public class Comment
     {
+        [Key]
         public long Id { get; set; }
         /// <summary>
         /// 文章Id

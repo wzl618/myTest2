@@ -9,6 +9,7 @@ namespace PhotoCommunity.Repository.Entity
     [Table("photo")]
     public class Photo
     {
+        [Key]
         public long Id { get; set; }
 
         public long ArticleId{ get; set; }

@@ -19,5 +19,15 @@ namespace PhotoCommunity.Web.Models.Request
         /// 文本内容
         /// </summary>
         public string TextContent { get; set; }
+
+        /// <summary>
+        /// 大类Id
+        /// </summary>
+        public long ClassId { get; set; } 
+
+        /// <summary>
+        /// 标签Id
+        /// </summary>
+        public long TagId { get; set; }
     }
 }

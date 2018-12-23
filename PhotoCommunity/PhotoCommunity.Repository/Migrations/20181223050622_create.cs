@@ -1,10 +1,9 @@
-﻿using System;
-using Microsoft.EntityFrameworkCore.Metadata;
+﻿using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace PhotoCommunity.Repository.Migrations
 {
-    public partial class Update : Migration
+    public partial class create : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -19,7 +18,6 @@ namespace PhotoCommunity.Repository.Migrations
                     ArticleTitle = table.Column<string>(maxLength: 100, nullable: false),
                     ArticleContext = table.Column<string>(maxLength: 500, nullable: false),
                     IsDelete = table.Column<bool>(nullable: false),
-                    CreateTime = table.Column<DateTime>(nullable: false),
                     UserName = table.Column<string>(maxLength: 100, nullable: false),
                     ViewCount = table.Column<int>(nullable: false),
                     CommmentCount = table.Column<int>(nullable: false)

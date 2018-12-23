@@ -20,15 +20,30 @@
         </div>
     </div>
     <div id="app">
-        <select id="tagList" name="tagList">
-            <option v-for="tag in tagList" v-bind:value="tag.id">{{tag.tagName}}</option>
-        </select>
-        <button v-on:click=" post">上传</button>
+        <div class="row">
+            <div class="col-md-4">
+                <label>请选择大类名称</label>
+                <select  class="classList"  v-model="classId">
+                    <option v-for="list in classList" v-bind:value="list.id">{{list.className}}</option>
+                </select>
+            </div>
+            <div class="col-md-4">
+                <label>请选择标签名称</label>
+                <select class="tagList"  v-model="tagId">
+                    <option v-for="tag in tagList" v-bind:value="tag.id">{{tag.tagName}}</option>
+                </select>
+            </div>
+            <div class="col-md-4">
+                <button v-on:click=" post">上传</button>
+            </div>
+        </div>           
     </div>
     <script src="../lib/ueditor/ueditor.config.js"></script>
     <script src="../lib/ueditor/ueditor.all.min.js"></script>
     <script src="/js/vue.js" language="javascript"></script>
     <script src="/js/vue-resource.js" language="javascript"></script>
+    <script src="../lib/jquery/dist/jquery.min.js"></script>
+    <script src="../lib/bootstrap/dist/js/bootstrap.min.js"></script>
     <script type="text/javascript">
         var ue = UE.getEditor('container', {
             initialFrameHeight: 250
@@ -39,15 +54,23 @@
                 data: {
                     textContent: "",
                     Context: "",
-                    tagList:[]
+                    tagList: [],
+                    classList: []
+                },
+                created() {
+                    //如果没有这句代码，select中初始化会是空白的，默认选中就无法实现
+                    this.classId = this.classList[0].id;
+                    this.tagId = this.tagList[0].id;
                 },
                 methods: {
                     post: function () {
                         app.textContent = UE.getEditor('container').getContentTxt(),
                             app.Context = UE.getEditor('container').getContent(),
                             this.$http.post('/api/article/SaveImageNameAndText', {
-                                "source": this.$data.Context,
-                                "textContent": this.$data.textContent
+                            "source": this.$data.Context,
+                            "textContent": this.$data.textContent,
+                            "classId": this.classId,
+                            "tagId": this.tagId
                             })
                                 .then(
                                     function (res) {
@@ -58,8 +81,8 @@
                                     });
                     },
 
-                      //发送get请求
-                    get: function () {
+                      //发送获取标签请求请求
+                    getAllTag: function () {
                         this.$http.get("/api/tag/GetAllTag", {})
                             .then(
                                 function (res) {
@@ -70,10 +93,25 @@
                                     alert("请求发送失败");
                                 }
                             );
+                    },
+
+                    //发送获取大类请求
+                    getAllClass: function () {
+                        this.$http.get("/api/class/GetAllclass", {})
+                            .then(
+                            function (res) {
+                                this.$data.classList = res.body;
+                                    console.log(this.$data.list);
+                                },
+                                function () {
+                                    alert("请求发送失败");
+                                }
+                            );
                     }
                 }
             });
-            app.get();
+            app.getAllTag();
+            app.getAllClass();
         }
     </script>
 </body>

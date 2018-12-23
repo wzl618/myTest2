@@ -21,15 +21,18 @@ namespace PhotoCommunity.Web.Api
     {
         private UEditorService _ueditorService;
         private IArticleService _articleService;
+        private IPhotoService _photoService;
         /// <summary>
         /// 构造函数注入
         /// </summary>
         /// <param name="uEditorService"></param>
         /// <param name="articleService"></param>
-        public ArticleController(UEditorService uEditorService, IArticleService articleService)
+        /// <param name="photoService"></param>
+        public ArticleController(UEditorService uEditorService, IArticleService articleService, IPhotoService photoService)
         {
             _ueditorService = uEditorService;
             _articleService = articleService;
+            _photoService = photoService;
         }
 
         /// <summary>

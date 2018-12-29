@@ -75,12 +75,17 @@ namespace PhotoCommunity.Web
             services.AddScoped<ITagService, TagService>();
             services.AddScoped<IArticleService, ArticleService>();
             services.AddScoped<IClassService,ClassService>();
+            services.AddScoped<IPhotoService,PhotoService>();
+            services.AddScoped<ICommentService,CommentService>();
 
             //注入Repository
             services.AddScoped<IUserRepository,UserRepository>();
             services.AddScoped<ITagRepository, TagRepository>();
             services.AddScoped<IArticleRepository, ArticleRepository>();
             services.AddScoped<IClassRepository,ClassRepository>();
+            services.AddScoped<IPhotoRepository,PhotoRepository>();
+            services.AddScoped<ICommentRepository,CommentRepository>();
+            services.AddScoped<IReplyCommentRepository,ReplyCommentRepository>();
 
             //注入editor
             services.AddUEditorService();

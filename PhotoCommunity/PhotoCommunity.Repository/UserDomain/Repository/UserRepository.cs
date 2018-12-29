@@ -40,5 +40,14 @@ namespace PhotoCommunity.Repository.UserDomain.Repository
         public User GetUser(User user) {
             return _dbContext.UserRepository.Where(p => p.UserName == user.UserName && p.Password == user.Password).FirstOrDefault();
         }
+
+        /// <summary>
+        /// 根据用户Id获取用户名称
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <returns></returns>
+        public string GetUserNameById(long userId) {
+            return _dbContext.UserRepository.Where(x => x.Id == userId).FirstOrDefault().UserName;
+        }
     }
 }

@@ -45,5 +45,10 @@ namespace PhotoCommunity.Repository.myDbContent
         /// 大类
         /// </summary>
         public DbSet<Class> ClassRepository { get; set; }
+
+        /// <summary>
+        /// 回复评论
+        /// </summary>
+        public DbSet<ReplyComment> ReplyCommentRepository { get; set; }
     }
 }

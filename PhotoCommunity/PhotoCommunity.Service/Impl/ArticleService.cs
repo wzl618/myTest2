@@ -23,9 +23,93 @@ namespace PhotoCommunity.Service.Impl
         /// </summary>
         /// <param name="articleModel"></param>
         /// <returns></returns>
-        public bool AddArticle(ArticleModel articleModel)
+        public long AddArticle(ArticleModel articleModel)
         {
             return _articleRepository.AddArticle(articleModel);
         }
+
+        /// <summary>
+        /// 获取文章信息
+        /// </summary>
+        /// <param name="articleId"></param>
+        /// <returns></returns>
+        public ArticleModel GetArticleById(long articleId)
+        {
+            var article = _articleRepository.GetArticleById(articleId);
+            if (article != null)
+            {
+                return AutoMapper.Mapper.Map<ArticleModel>(article);
+            }
+            else {
+                return null;
+            }
+            
+        }
+
+        /// <summary>
+        /// 更新文章
+        /// </summary>
+        /// <param name="articleModel"></param>
+        /// <returns></returns>
+        public bool UpdateArticle(ArticleModel articleModel)
+        {
+            return _articleRepository.UpdateArticle(articleModel);
+        }
+
+        /// <summary>
+        /// 删除文章
+        /// </summary>
+        /// <param name="articleId"></param>
+        /// <returns></returns>
+        public bool DeleteArticle(long articleId) {
+
+            return _articleRepository.DeleteArticle(articleId);
+        }
+
+        /// <summary>
+        /// 根据文章标题获取文章信息
+        /// </summary>
+        /// <param name="articleTitle"></param>
+        /// <returns></returns>
+        public List<ArticleModel> GetArticleByArticleTitle(string articleTitle)
+        {
+            var article = _articleRepository.GetArticleByArticleTitle(articleTitle);
+            if (article != null)
+            {
+                return AutoMapper.Mapper.Map<List<ArticleModel>>(article);
+            }
+            else
+            {
+                return null;
+            }
+        }
+
+        /// <summary>
+        /// 根据大类Id获取文章信息
+        /// </summary>
+        /// <param name="classId"></param>
+        /// <returns></returns>
+        public List<ArticleModel> GetArticleByClassId(int pageSize, int pageIndex, long classId) {
+            var model = new ArticleAndIndexModel();
+            var article = _articleRepository.GetArticleByClassId(pageSize, pageIndex,classId);
+            if (article != null)
+            {
+                return AutoMapper.Mapper.Map<List<ArticleModel>>(article);
+            }
+            else
+            {
+                return null;
+            }
+        }
+
+        /// <summary>
+        /// 根据大类获取文章数量
+        /// </summary>
+        /// <param name="classId"></param>
+        /// <returns></returns>
+        public int GetArticleCountByClassId(long classId) {
+            return _articleRepository.GetArticleCountByClassId(classId);
+        }
+
     }
 }

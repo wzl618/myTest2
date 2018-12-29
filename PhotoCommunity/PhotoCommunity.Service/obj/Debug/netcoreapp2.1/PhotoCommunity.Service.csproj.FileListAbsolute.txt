@@ -22,3 +22,15 @@ F:\myphoto\myTest2\PhotoCommunity\PhotoCommunity.Service\obj\Debug\netcoreapp2.1
 F:\myphoto\myTest2\PhotoCommunity\PhotoCommunity.Service\obj\Debug\netcoreapp2.1\PhotoCommunity.Service.csproj.CopyComplete
 F:\myphoto\myTest2\PhotoCommunity\PhotoCommunity.Service\obj\Debug\netcoreapp2.1\PhotoCommunity.Service.dll
 F:\myphoto\myTest2\PhotoCommunity\PhotoCommunity.Service\obj\Debug\netcoreapp2.1\PhotoCommunity.Service.pdb
+E:\myphoto\myTest2\PhotoCommunity\PhotoCommunity.Service\bin\Debug\netcoreapp2.1\PhotoCommunity.Service.deps.json
+E:\myphoto\myTest2\PhotoCommunity\PhotoCommunity.Service\bin\Debug\netcoreapp2.1\PhotoCommunity.Service.dll
+E:\myphoto\myTest2\PhotoCommunity\PhotoCommunity.Service\bin\Debug\netcoreapp2.1\PhotoCommunity.Service.pdb
+E:\myphoto\myTest2\PhotoCommunity\PhotoCommunity.Service\bin\Debug\netcoreapp2.1\PhotoCommunity.Repository.dll
+E:\myphoto\myTest2\PhotoCommunity\PhotoCommunity.Service\bin\Debug\netcoreapp2.1\PhotoCommunity.Repository.pdb
+E:\myphoto\myTest2\PhotoCommunity\PhotoCommunity.Service\obj\Debug\netcoreapp2.1\PhotoCommunity.Service.csprojAssemblyReference.cache
+E:\myphoto\myTest2\PhotoCommunity\PhotoCommunity.Service\obj\Debug\netcoreapp2.1\PhotoCommunity.Service.csproj.CoreCompileInputs.cache
+E:\myphoto\myTest2\PhotoCommunity\PhotoCommunity.Service\obj\Debug\netcoreapp2.1\PhotoCommunity.Service.AssemblyInfoInputs.cache
+E:\myphoto\myTest2\PhotoCommunity\PhotoCommunity.Service\obj\Debug\netcoreapp2.1\PhotoCommunity.Service.AssemblyInfo.cs
+E:\myphoto\myTest2\PhotoCommunity\PhotoCommunity.Service\obj\Debug\netcoreapp2.1\PhotoCommunity.Service.csproj.CopyComplete
+E:\myphoto\myTest2\PhotoCommunity\PhotoCommunity.Service\obj\Debug\netcoreapp2.1\PhotoCommunity.Service.dll
+E:\myphoto\myTest2\PhotoCommunity\PhotoCommunity.Service\obj\Debug\netcoreapp2.1\PhotoCommunity.Service.pdb

@@ -46,5 +46,10 @@ namespace PhotoCommunity.Web.Models.Request
         /// 评论次数
         /// </summary>
         public int CommmentCount { get; set; }
+
+        /// <summary>
+        /// 全部内容
+        /// </summary>
+        public string Context { get; set; }
     }
 }

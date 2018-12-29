@@ -35,5 +35,24 @@ namespace PhotoCommunity.Service.Impl
             var user = _userRepository.GetUser(userModel);
             return AutoMapper.Mapper.Map<UserModel>(user);
         }
+
+        /// <summary>
+        /// 检查用户名是否重复
+        /// </summary>
+        /// <param name="userName"></param>
+        /// <returns></returns>
+        public bool CheckUserName(string userName) 
+        {
+            return _userRepository.CheckUser(userName);
+        }
+
+        /// <summary>
+        /// 根据用户Id获取用户名
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <returns></returns>
+        public string GetUserNameById(long userId) {
+            return _userRepository.GetUserNameById(userId);
+        }
     }
 }

@@ -16,3 +16,12 @@ F:\myphoto\myTest2\PhotoCommunity\PhotoCommunity.Repository\obj\Debug\netcoreapp
 F:\myphoto\myTest2\PhotoCommunity\PhotoCommunity.Repository\obj\Debug\netcoreapp2.1\PhotoCommunity.Repository.AssemblyInfo.cs
 F:\myphoto\myTest2\PhotoCommunity\PhotoCommunity.Repository\obj\Debug\netcoreapp2.1\PhotoCommunity.Repository.dll
 F:\myphoto\myTest2\PhotoCommunity\PhotoCommunity.Repository\obj\Debug\netcoreapp2.1\PhotoCommunity.Repository.pdb
+E:\myphoto\myTest2\PhotoCommunity\PhotoCommunity.Repository\bin\Debug\netcoreapp2.1\PhotoCommunity.Repository.deps.json
+E:\myphoto\myTest2\PhotoCommunity\PhotoCommunity.Repository\bin\Debug\netcoreapp2.1\PhotoCommunity.Repository.dll
+E:\myphoto\myTest2\PhotoCommunity\PhotoCommunity.Repository\bin\Debug\netcoreapp2.1\PhotoCommunity.Repository.pdb
+E:\myphoto\myTest2\PhotoCommunity\PhotoCommunity.Repository\obj\Debug\netcoreapp2.1\PhotoCommunity.Repository.csprojAssemblyReference.cache
+E:\myphoto\myTest2\PhotoCommunity\PhotoCommunity.Repository\obj\Debug\netcoreapp2.1\PhotoCommunity.Repository.csproj.CoreCompileInputs.cache
+E:\myphoto\myTest2\PhotoCommunity\PhotoCommunity.Repository\obj\Debug\netcoreapp2.1\PhotoCommunity.Repository.AssemblyInfoInputs.cache
+E:\myphoto\myTest2\PhotoCommunity\PhotoCommunity.Repository\obj\Debug\netcoreapp2.1\PhotoCommunity.Repository.AssemblyInfo.cs
+E:\myphoto\myTest2\PhotoCommunity\PhotoCommunity.Repository\obj\Debug\netcoreapp2.1\PhotoCommunity.Repository.dll
+E:\myphoto\myTest2\PhotoCommunity\PhotoCommunity.Repository\obj\Debug\netcoreapp2.1\PhotoCommunity.Repository.pdb

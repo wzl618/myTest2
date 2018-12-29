@@ -9,12 +9,15 @@
             文章
             </summary>
         </member>
-        <member name="M:PhotoCommunity.Web.Api.ArticleController.#ctor(UEditor.Core.UEditorService,PhotoCommunity.Service.IArticleService)">
+        <member name="M:PhotoCommunity.Web.Api.ArticleController.#ctor(UEditor.Core.UEditorService,PhotoCommunity.Service.IArticleService,PhotoCommunity.Service.IPhotoService,PhotoCommunity.Service.IClassService,PhotoCommunity.Service.ITagService)">
             <summary>
             构造函数注入
             </summary>
             <param name="uEditorService"></param>
             <param name="articleService"></param>
+            <param name="photoService"></param>
+            <param name="classService"></param>
+            <param name="tagService"></param>
         </member>
         <member name="M:PhotoCommunity.Web.Api.ArticleController.Upload">
             <summary>
@@ -26,8 +29,13 @@
             <summary>
             保存图片名称及文字
             </summary>
-            <param name="source"></param>
             <param name="request"></param>
+            <returns></returns>
+        </member>
+        <member name="M:PhotoCommunity.Web.Api.ArticleController.UpdateImageNameAndText(PhotoCommunity.Web.Models.Request.UpdateImageNameAndTextRequest)">
+            <summary>
+            修改图片及文本
+            </summary>
             <returns></returns>
         </member>
         <member name="M:PhotoCommunity.Web.Api.ArticleController.AddArticle(PhotoCommunity.Web.Models.Request.AddArticleRequest)">
@@ -35,6 +43,43 @@
             添加文章
             </summary>
             <param name="request"></param>
+            <returns></returns>
+        </member>
+        <member name="M:PhotoCommunity.Web.Api.ArticleController.GetArticle(System.Int64)">
+            <summary>
+            获取文章内容
+            </summary>
+            <param name="articleId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:PhotoCommunity.Web.Api.ArticleController.DeleteArticle(System.Int64)">
+            <summary>
+            删除文章
+            </summary>
+            <param name="articleId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:PhotoCommunity.Web.Api.ArticleController.SearchArticleByArticleTitle(System.String)">
+            <summary>
+            根据文章标题搜索文章
+            </summary>
+            <param name="articleTitle"></param>
+            <returns></returns>
+        </member>
+        <member name="M:PhotoCommunity.Web.Api.ArticleController.GetArtilceByClassId(System.Int32,System.Int32,System.Int64)">
+            <summary>
+            根据大类Id获取文章信息
+            </summary>
+            <param name="pageSize"></param>
+            <param name="pageIndex"></param>
+            <param name="classId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:PhotoCommunity.Web.Api.ArticleController.GetArticleCountByClassId(System.Int64)">
+            <summary>
+            根据大类Id获取文章数量
+            </summary>
+            <param name="classId"></param>
             <returns></returns>
         </member>
         <member name="T:PhotoCommunity.Web.Api.ClassController">
@@ -80,6 +125,37 @@
             更新大类
             </summary>
             <param name="request"></param>
+            <returns></returns>
+        </member>
+        <member name="T:PhotoCommunity.Web.Api.CommentController">
+            <summary>
+            评论
+            </summary>
+        </member>
+        <member name="M:PhotoCommunity.Web.Api.CommentController.#ctor(PhotoCommunity.Service.ICommentService,PhotoCommunity.Service.IUserService)">
+            <summary>
+            构造函数注入
+            </summary>
+        </member>
+        <member name="M:PhotoCommunity.Web.Api.CommentController.AddComment(PhotoCommunity.Web.Models.Request.AddCommentRequest)">
+            <summary>
+            增加评论
+            </summary>
+            <param name="request"></param>
+            <returns></returns>
+        </member>
+        <member name="M:PhotoCommunity.Web.Api.CommentController.AddReplyComment(PhotoCommunity.Web.Models.Request.AddReplyCommentRequest)">
+            <summary>
+            增加评论回复
+            </summary>
+            <param name="request"></param>
+            <returns></returns>
+        </member>
+        <member name="M:PhotoCommunity.Web.Api.CommentController.GetCommentByArticleId(System.Int64)">
+            <summary>
+            根据文章Id获取评论
+            </summary>
+            <param name="ArticleId"></param>
             <returns></returns>
         </member>
         <member name="T:PhotoCommunity.Web.Api.TagController">
@@ -143,9 +219,21 @@
             <param name="request"></param>
             <returns></returns>
         </member>
+        <member name="M:PhotoCommunity.Web.Api.UserController.GetUserName">
+            <summary>
+            获取用户名
+            </summary>
+            <returns></returns>
+        </member>
         <member name="M:PhotoCommunity.Web.Api.UserController.UserLoginOut">
             <summary>
             用户登出
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:PhotoCommunity.Web.Api.UserController.CheckUserName(System.String)">
+            <summary>
+            检查用户名是否重复
             </summary>
             <returns></returns>
         </member>
@@ -209,6 +297,11 @@
             评论次数
             </summary>
         </member>
+        <member name="P:PhotoCommunity.Web.Models.Request.AddArticleRequest.Context">
+            <summary>
+            全部内容
+            </summary>
+        </member>
         <member name="T:PhotoCommunity.Web.Models.Request.AddClassRequest">
             <summary>
             增加大类Request
@@ -217,6 +310,31 @@
         <member name="P:PhotoCommunity.Web.Models.Request.AddClassRequest.ClassName">
             <summary>
             大类名称
+            </summary>
+        </member>
+        <member name="T:PhotoCommunity.Web.Models.Request.AddCommentRequest">
+            <summary>
+            增加评论Request
+            </summary>
+        </member>
+        <member name="P:PhotoCommunity.Web.Models.Request.AddCommentRequest.ArticleId">
+            <summary>
+            文章Id
+            </summary>
+        </member>
+        <member name="P:PhotoCommunity.Web.Models.Request.AddCommentRequest.UserId">
+            <summary>
+            用户Id
+            </summary>
+        </member>
+        <member name="P:PhotoCommunity.Web.Models.Request.AddCommentRequest.Context">
+            <summary>
+            评论内容
+            </summary>
+        </member>
+        <member name="P:PhotoCommunity.Web.Models.Request.AddCommentRequest.CommentTime">
+            <summary>
+            评论时间
             </summary>
         </member>
         <member name="T:PhotoCommunity.Web.Models.Request.AddPhotoRequest">
@@ -232,6 +350,26 @@
         <member name="P:PhotoCommunity.Web.Models.Request.AddPhotoRequest.Url">
             <summary>
             图片路径
+            </summary>
+        </member>
+        <member name="T:PhotoCommunity.Web.Models.Request.AddReplyCommentRequest">
+            <summary>
+            增加评论回复Request
+            </summary>
+        </member>
+        <member name="P:PhotoCommunity.Web.Models.Request.AddReplyCommentRequest.CommentId">
+            <summary>
+            评论Id
+            </summary>
+        </member>
+        <member name="P:PhotoCommunity.Web.Models.Request.AddReplyCommentRequest.ReplyContext">
+            <summary>
+            回复内容
+            </summary>
+        </member>
+        <member name="P:PhotoCommunity.Web.Models.Request.AddReplyCommentRequest.UserId">
+            <summary>
+            用户Id
             </summary>
         </member>
         <member name="T:PhotoCommunity.Web.Models.Request.AddTagRequest">
@@ -299,6 +437,116 @@
             标签名称
             </summary>
         </member>
+        <member name="T:PhotoCommunity.Web.Models.Request.UpdateArticleRequest">
+            <summary>
+            更新文章Request
+            </summary>
+        </member>
+        <member name="P:PhotoCommunity.Web.Models.Request.UpdateArticleRequest.Id">
+            <summary>
+            文章Id
+            </summary>
+        </member>
+        <member name="P:PhotoCommunity.Web.Models.Request.UpdateArticleRequest.ClassId">
+            <summary>
+            大类Id
+            </summary>
+        </member>
+        <member name="P:PhotoCommunity.Web.Models.Request.UpdateArticleRequest.TagId">
+            <summary>
+            标签Id
+            </summary>
+        </member>
+        <member name="P:PhotoCommunity.Web.Models.Request.UpdateArticleRequest.ArticleTitle">
+            <summary>
+            文章标题
+            </summary>
+        </member>
+        <member name="P:PhotoCommunity.Web.Models.Request.UpdateArticleRequest.ArticleContext">
+            <summary>
+            文章内容
+            </summary>
+        </member>
+        <member name="P:PhotoCommunity.Web.Models.Request.UpdateArticleRequest.IsDelete">
+            <summary>
+            是否删除
+            </summary>
+        </member>
+        <member name="P:PhotoCommunity.Web.Models.Request.UpdateArticleRequest.CreateTime">
+            <summary>
+            创建时间
+            </summary>
+        </member>
+        <member name="P:PhotoCommunity.Web.Models.Request.UpdateArticleRequest.UserName">
+            <summary>
+            作者
+            </summary>
+        </member>
+        <member name="P:PhotoCommunity.Web.Models.Request.UpdateArticleRequest.ViewCount">
+            <summary>
+            浏览次数
+            </summary>
+        </member>
+        <member name="P:PhotoCommunity.Web.Models.Request.UpdateArticleRequest.CommentCount">
+            <summary>
+            评论次数
+            </summary>
+        </member>
+        <member name="P:PhotoCommunity.Web.Models.Request.UpdateArticleRequest.Context">
+            <summary>
+            全部内容
+            </summary>
+        </member>
+        <member name="T:PhotoCommunity.Web.Models.Request.UpdateImageNameAndTextRequest">
+            <summary>
+            更新图片及文本
+            </summary>
+        </member>
+        <member name="P:PhotoCommunity.Web.Models.Request.UpdateImageNameAndTextRequest.ArticleId">
+            <summary>
+            文章Id
+            </summary>
+        </member>
+        <member name="P:PhotoCommunity.Web.Models.Request.UpdateImageNameAndTextRequest.Source">
+            <summary>
+            全部内容
+            </summary>
+        </member>
+        <member name="P:PhotoCommunity.Web.Models.Request.UpdateImageNameAndTextRequest.TextContent">
+            <summary>
+            文本内容
+            </summary>
+        </member>
+        <member name="P:PhotoCommunity.Web.Models.Request.UpdateImageNameAndTextRequest.ClassId">
+            <summary>
+            大类Id
+            </summary>
+        </member>
+        <member name="P:PhotoCommunity.Web.Models.Request.UpdateImageNameAndTextRequest.TagId">
+            <summary>
+            标签Id
+            </summary>
+        </member>
+        <member name="T:PhotoCommunity.Web.Models.Request.UpdatePhotoRequest">
+            <summary>
+            更新图片Request
+            </summary>
+        </member>
+        <member name="P:PhotoCommunity.Web.Models.Request.UpdatePhotoRequest.Id">
+            <summary>
+            图片Id
+            </summary>
+        </member>
+        <member name="P:PhotoCommunity.Web.Models.Request.UpdatePhotoRequest.ArticleId">
+            <summary>
+            文章Id
+            </summary>
+        </member>
+        <member name="P:PhotoCommunity.Web.Models.Request.UpdatePhotoRequest.Url">
+            <summary>
+            图片路径
+            </summary>
+        </member>
         <member name="T:PhotoCommunity.Web.Models.Request.UserLoginRequest">
             <summary>
             用户登录Request
@@ -342,6 +590,186 @@
         <member name="P:PhotoCommunity.Web.Models.Response.ClassResponse.ClassName">
             <summary>
             大类名称
+            </summary>
+        </member>
+        <member name="T:PhotoCommunity.Web.Models.Response.GetArticleResponse">
+            <summary>
+            获取文章Response
+            </summary>
+        </member>
+        <member name="P:PhotoCommunity.Web.Models.Response.GetArticleResponse.Id">
+            <summary>
+            文章Id
+            </summary>
+        </member>
+        <member name="P:PhotoCommunity.Web.Models.Response.GetArticleResponse.ClassId">
+            <summary>
+            大类Id
+            </summary>
+        </member>
+        <member name="P:PhotoCommunity.Web.Models.Response.GetArticleResponse.ClassName">
+            <summary>
+            大类名称
+            </summary>
+        </member>
+        <member name="P:PhotoCommunity.Web.Models.Response.GetArticleResponse.TagId">
+            <summary>
+            标签Id
+            </summary>
+        </member>
+        <member name="P:PhotoCommunity.Web.Models.Response.GetArticleResponse.TagName">
+            <summary>
+            标签名称
+            </summary>
+        </member>
+        <member name="P:PhotoCommunity.Web.Models.Response.GetArticleResponse.ArticleTitle">
+            <summary>
+            文章标题
+            </summary>
+        </member>
+        <member name="P:PhotoCommunity.Web.Models.Response.GetArticleResponse.ArticleContext">
+            <summary>
+            文章内容
+            </summary>
+        </member>
+        <member name="P:PhotoCommunity.Web.Models.Response.GetArticleResponse.IsDelete">
+            <summary>
+            是否删除
+            </summary>
+        </member>
+        <member name="P:PhotoCommunity.Web.Models.Response.GetArticleResponse.CreateTime">
+            <summary>
+            创建时间
+            </summary>
+        </member>
+        <member name="P:PhotoCommunity.Web.Models.Response.GetArticleResponse.CreateTimeStr">
+            <summary>
+            创建时间转化字符串
+            </summary>
+        </member>
+        <member name="P:PhotoCommunity.Web.Models.Response.GetArticleResponse.UserName">
+            <summary>
+            作者
+            </summary>
+        </member>
+        <member name="P:PhotoCommunity.Web.Models.Response.GetArticleResponse.ViewCount">
+            <summary>
+            浏览次数
+            </summary>
+        </member>
+        <member name="P:PhotoCommunity.Web.Models.Response.GetArticleResponse.CommentCount">
+            <summary>
+            评论次数
+            </summary>
+        </member>
+        <member name="P:PhotoCommunity.Web.Models.Response.GetArticleResponse.Photos">
+            <summary>
+            图片集合
+            </summary>
+        </member>
+        <member name="P:PhotoCommunity.Web.Models.Response.GetArticleResponse.Context">
+            <summary>
+            全部内容
+            </summary>
+        </member>
+        <member name="T:PhotoCommunity.Web.Models.Response.GetCommentResponse">
+            <summary>
+            获取评论Response
+            </summary>
+        </member>
+        <member name="P:PhotoCommunity.Web.Models.Response.GetCommentResponse.Id">
+            <summary>
+            评论Id
+            </summary>
+        </member>
+        <member name="P:PhotoCommunity.Web.Models.Response.GetCommentResponse.ArticleId">
+            <summary>
+            文章Id
+            </summary>
+        </member>
+        <member name="P:PhotoCommunity.Web.Models.Response.GetCommentResponse.UserName">
+            <summary>
+            用户姓名
+            </summary>
+        </member>
+        <member name="P:PhotoCommunity.Web.Models.Response.GetCommentResponse.UserId">
+            <summary>
+            用户Id
+            </summary>
+        </member>
+        <member name="P:PhotoCommunity.Web.Models.Response.GetCommentResponse.Context">
+            <summary>
+            评论内容
+            </summary>
+        </member>
+        <member name="P:PhotoCommunity.Web.Models.Response.GetCommentResponse.CommentTime">
+            <summary>
+            评论时间
+            </summary>
+        </member>
+        <member name="P:PhotoCommunity.Web.Models.Response.GetCommentResponse.CommentTimeStr">
+            <summary>
+            评论时间字符串
+            </summary>
+        </member>
+        <member name="P:PhotoCommunity.Web.Models.Response.GetCommentResponse.ReplyComments">
+            <summary>
+            回复评论集合
+            </summary>
+        </member>
+        <member name="T:PhotoCommunity.Web.Models.Response.PhotoResponse">
+            <summary>
+            图片Response
+            </summary>
+        </member>
+        <member name="P:PhotoCommunity.Web.Models.Response.PhotoResponse.ArticleId">
+            <summary>
+            文章Id
+            </summary>
+        </member>
+        <member name="P:PhotoCommunity.Web.Models.Response.PhotoResponse.Url">
+            <summary>
+            图片路径
+            </summary>
+        </member>
+        <member name="T:PhotoCommunity.Web.Models.Response.ReplyCommentResponse">
+            <summary>
+            回复评论Response
+            </summary>
+        </member>
+        <member name="P:PhotoCommunity.Web.Models.Response.ReplyCommentResponse.Id">
+            <summary>
+            回复评论Id
+            </summary>
+        </member>
+        <member name="P:PhotoCommunity.Web.Models.Response.ReplyCommentResponse.CommentId">
+            <summary>
+            评论Id
+            </summary>
+        </member>
+        <member name="P:PhotoCommunity.Web.Models.Response.ReplyCommentResponse.ReplyContext">
+            <summary>
+            回复内容
+            </summary>
+        </member>
+        <member name="P:PhotoCommunity.Web.Models.Response.ReplyCommentResponse.UserId">
+            <summary>
+            用户Id
+            </summary>
+        </member>
+        <member name="P:PhotoCommunity.Web.Models.Response.ReplyCommentResponse.UserName">
+            <summary>
+            用户名称
+            </summary>
+        </member>
+        <member name="P:PhotoCommunity.Web.Models.Response.ReplyCommentResponse.CreateTime">
+            <summary>
+            创建时间
+            </summary>
+        </member>
+        <member name="P:PhotoCommunity.Web.Models.Response.ReplyCommentResponse.CreateTimeStr">
+            <summary>
+            创建时间字符串
             </summary>
         </member>
         <member name="T:PhotoCommunity.Web.Models.Response.TagResponse">

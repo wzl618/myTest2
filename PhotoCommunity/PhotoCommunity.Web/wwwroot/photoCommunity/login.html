@@ -1,0 +1,100 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>BusinessNews</title>
+
+    <meta name="keywords" content="" />
+    <meta name="description" content="" />
+
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+
+    <!--[if lt IE 9]>
+    <script type="text/javascript" src="layout/plugins/html5.js"></script>
+    <![endif]-->
+
+    <link rel="stylesheet" href="layout/style.css" type="text/css" />
+    <link href="http://fonts.googleapis.com/css?family=PT+Sans:400,700" rel="stylesheet" type="text/css" />
+    <link href="http://fonts.googleapis.com/css?family=PT+Sans+Narrow:400,700" rel="stylesheet" type="text/css" />
+    <link href="http://fonts.googleapis.com/css?family=Droid+Serif:400,400italic" rel="stylesheet" type="text/css" />
+
+    <script type="text/javascript" src="layout/js/main.js"></script>
+    <script src="layout/js/vue.js" language="javascript"></script>
+    <script src="layout/js/vue-resource.js" language="javascript"></script>
+
+    <script>
+        window.onload = function () {
+            var login = new Vue({
+                el: '#login',
+                data: {
+                    userName: '',
+                    password: ''
+                },
+                methods: {
+                    login: function () {
+                        this.$http.post('/api/user/UserLogin', {
+                            "userName": this.$data.userName,
+                            "password": this.$data.password
+                        })
+                            .then(
+                                function (res) {
+                                    this.$data.canSee = false;
+                                    window.location.href = "/photoCommunity/index.html";
+                                    alert('登录成功');
+
+                                },
+                                function () {
+                                    alert('登录失败');   //失败处理
+                                });
+                    }
+                }
+            });
+        };
+    </script>
+
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+</head>
+<body>
+    <div id="overlay"></div>
+    <div id="login" class="block_popup">
+        <div class="popup">
+            <a href="/photoCommunity/index.html" class="close">Close</a>
+
+            <div class="content">
+                <div class="title"><p>登录</p></div>
+
+                <div class="form">
+                    <form action="#" />
+                    <div class="column">
+                        <p class="label">用户名</p>
+                        <div class="field"><input type="text" v-model="userName" /></div>
+                    </div>
+
+                    <div class="column">
+                        <p class="label">密码</p>
+                        <div class="field"><input type="password" v-model="password" /></div>
+                    </div>
+
+                    <div class="column_2">
+                        <div class="remember">
+                            <div class="checkbox"><input type="checkbox" /></div>
+                            <div class="remember_label"><p>记住密码</p></div>
+                        </div>
+                    </div>
+
+                    <div class="column_2">
+                        <p class="forgot_pass"><a href="#">忘记密码</a></p>
+                    </div>
+
+                    <div class="column button">
+                        <a href="#" class="enter" v-on:click="login"><span>登录</span></a>
+                    </div>
+
+                    <div class="clearboth"></div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

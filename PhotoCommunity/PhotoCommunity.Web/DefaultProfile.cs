@@ -32,13 +32,38 @@ namespace PhotoCommunity.Web
 
             //文章
             CreateMap<AddArticleRequest,ArticleModel>();
+            CreateMap<Article,ArticleModel>();
+            CreateMap<ArticleModel, GetArticleResponse>()
+                .ForMember(dm => dm.Photos, mo => mo.Ignore())
+                .ForMember(dm => dm.ClassName, mo => mo.Ignore())
+                .ForMember(dm => dm.TagName, mo => mo.Ignore());
+
+            CreateMap<UpdateArticleRequest,ArticleModel>();
+
+
             //图片
             CreateMap<AddPhotoRequest,PhotoModel>();
+            CreateMap<Photo,PhotoModel>();
+            CreateMap<PhotoModel,PhotoResponse>();
+            CreateMap<UpdatePhotoRequest,PhotoModel>();
 
             //大类
             CreateMap<Class,ClassModel>();
             CreateMap<ClassRequest,ClassModel>();
             CreateMap<ClassModel,ClassResponse>();
+
+            //评论
+            CreateMap<Comment,CommentModel>();
+            CreateMap<AddCommentRequest, CommentModel>().
+                ForMember(dm=>dm.CommentTime,mo=>mo.Ignore());
+            CreateMap<AddReplyCommentRequest,ReplyCommentModel>()
+                .ForMember(dm=>dm.CreateTime,mo=>mo.Ignore());
+            CreateMap<CommentModel,GetCommentResponse>()
+                .ForMember(dm=>dm.UserName,mo=>mo.Ignore())
+                .ForMember(dm=>dm.ReplyComments,mo=>mo.Ignore());
+            CreateMap<ReplyComment,ReplyCommentModel>();
+            CreateMap<ReplyCommentModel,ReplyCommentResponse>();
+
 
         }
     }

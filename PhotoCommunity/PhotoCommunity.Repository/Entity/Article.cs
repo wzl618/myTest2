@@ -34,7 +34,7 @@ namespace PhotoCommunity.Repository.Entity
         /// <summary>
         /// 文章内容
         /// </summary>
-        [Required,MaxLength(500)]
+        [Required,MaxLength(1000)]
         public string ArticleContext { get; set; }
         /// <summary>
         /// 是否删除
@@ -56,6 +56,11 @@ namespace PhotoCommunity.Repository.Entity
         /// <summary>
         /// 评论次数
         /// </summary>
-        public int CommmentCount { get; set; }
+        public int CommentCount { get; set; }
+
+        /// <summary>
+        /// 全部内容
+        /// </summary>
+        public string Context { get; set; }
     }
 }

@@ -57,6 +57,20 @@ namespace PhotoCommunity.Web.Api
         }
 
         /// <summary>
+        /// 获取用户名
+        /// </summary>
+        /// <returns></returns>
+        [Route("GetUserName")]
+        [HttpGet]
+        public string GetUserName() {
+            string username = HttpContext.Session.GetString("username");
+            if (!string.IsNullOrEmpty(username)) {
+                return username;
+            }
+            return "false";
+        }
+
+        /// <summary>
         /// 用户登出
         /// </summary>
         /// <returns></returns>
@@ -66,6 +80,16 @@ namespace PhotoCommunity.Web.Api
             HttpContext.Session.Remove("username");
             string username = HttpContext.Session.GetString("username");
             return username==null?true:false;
+        }
+
+        /// <summary>
+        /// 检查用户名是否重复
+        /// </summary>
+        /// <returns></returns>
+        [Route("CheckUserName")]
+        [HttpPost]
+        public bool CheckUserName(string userName) {
+            return _userService.CheckUserName(userName);
         }
     }
 }

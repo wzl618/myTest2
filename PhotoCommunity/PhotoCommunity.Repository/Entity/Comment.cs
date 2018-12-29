@@ -9,7 +9,7 @@ namespace PhotoCommunity.Repository.Entity
     /// <summary>
     /// 评论
     /// </summary>
-    [Table("commment")]
+    [Table("comment")]
     public class Comment
     {
         [Key]
@@ -25,7 +25,12 @@ namespace PhotoCommunity.Repository.Entity
         /// <summary>
         /// 评论内容
         /// </summary>
-        [Required,MaxLength(100)]
+        [Required,MaxLength(500)]
         public string Context { get; set; }
+
+        /// <summary>
+        /// 评论时间
+        /// </summary>
+        public DateTime CommentTime { get; set; }
     }
 }

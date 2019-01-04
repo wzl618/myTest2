@@ -82,6 +82,13 @@
             <param name="classId"></param>
             <returns></returns>
         </member>
+        <member name="M:PhotoCommunity.Web.Api.ArticleController.UpdateArticleViewCount(System.Int64)">
+            <summary>
+            增加文章已看次数
+            </summary>
+            <param name="articleId"></param>
+            <returns></returns>
+        </member>
         <member name="T:PhotoCommunity.Web.Api.ClassController">
             <summary>
             大类
@@ -132,7 +139,7 @@
             评论
             </summary>
         </member>
-        <member name="M:PhotoCommunity.Web.Api.CommentController.#ctor(PhotoCommunity.Service.ICommentService,PhotoCommunity.Service.IUserService)">
+        <member name="M:PhotoCommunity.Web.Api.CommentController.#ctor(PhotoCommunity.Service.ICommentService,PhotoCommunity.Service.IUserService,PhotoCommunity.Service.IArticleService)">
             <summary>
             构造函数注入
             </summary>

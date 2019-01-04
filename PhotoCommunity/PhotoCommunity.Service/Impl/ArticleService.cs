@@ -111,5 +111,42 @@ namespace PhotoCommunity.Service.Impl
             return _articleRepository.GetArticleCountByClassId(classId);
         }
 
+        /// <summary>
+        /// 更新文章已看数量
+        /// </summary>
+        /// <param name="articleId"></param>
+        /// <returns></returns>
+        public bool UpdateArticleViewCount(long articleId) {
+
+            var oldArticle = _articleRepository.GetArticleById(articleId);
+            if (oldArticle != null)
+            {
+                oldArticle.ViewCount++;
+                return _articleRepository.UpdateArticle(oldArticle);
+            }
+            else {
+                return false;
+            }
+            
+        }
+
+        /// <summary>
+        /// 更新文章评论数量
+        /// </summary>
+        /// <param name="articleId"></param>
+        /// <returns></returns>
+        public bool UpdateArticleCommentCount(long articleId) {
+            var oldArticle = _articleRepository.GetArticleById(articleId);
+            if (oldArticle != null)
+            {
+                oldArticle.CommentCount++;
+                return _articleRepository.UpdateArticle(oldArticle);
+            }
+            else
+            {
+                return false;
+            }
+        }
+
     }
 }

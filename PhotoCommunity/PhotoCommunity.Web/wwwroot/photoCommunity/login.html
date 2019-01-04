@@ -1,31 +1,21 @@
-﻿<!DOCTYPE html>
-<html>
+﻿<!doctype html>
+<html lang="en">
 <head>
-    <title>BusinessNews</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <meta name="keywords" content="" />
-    <meta name="description" content="" />
+    <link rel="stylesheet" href="c/css/bootstrap.css">
+    <link rel="stylesheet" href="c/login/login.css">
+    <link rel="stylesheet" href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.css">
 
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width" />
-
-    <!--[if lt IE 9]>
-    <script type="text/javascript" src="layout/plugins/html5.js"></script>
-    <![endif]-->
-
-    <link rel="stylesheet" href="layout/style.css" type="text/css" />
-    <link href="http://fonts.googleapis.com/css?family=PT+Sans:400,700" rel="stylesheet" type="text/css" />
-    <link href="http://fonts.googleapis.com/css?family=PT+Sans+Narrow:400,700" rel="stylesheet" type="text/css" />
-    <link href="http://fonts.googleapis.com/css?family=Droid+Serif:400,400italic" rel="stylesheet" type="text/css" />
-
-    <script type="text/javascript" src="layout/js/main.js"></script>
+    <script src="j/js/jquery.js"></script>
+    <script src="j/js/bootstrap.js"></script>
     <script src="layout/js/vue.js" language="javascript"></script>
     <script src="layout/js/vue-resource.js" language="javascript"></script>
-
     <script>
         window.onload = function () {
-            var login = new Vue({
-                el: '#login',
+            var app = new Vue({
+                el: '#app',
                 data: {
                     userName: '',
                     password: ''
@@ -49,52 +39,57 @@
                     }
                 }
             });
-        };
+        };      
     </script>
-
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
 </head>
 <body>
-    <div id="overlay"></div>
-    <div id="login" class="block_popup">
-        <div class="popup">
-            <a href="/photoCommunity/index.html" class="close">Close</a>
 
-            <div class="content">
-                <div class="title"><p>登录</p></div>
+    <div>
+        <div class="be-content pren">
 
-                <div class="form">
-                    <form action="#" />
-                    <div class="column">
-                        <p class="label">用户名</p>
-                        <div class="field"><input type="text" v-model="userName" /></div>
-                    </div>
+            <div class="ioc_text">
+                <img src="i/login/logo.png" alt="">
+                <span>请登录您的用户</span>
+            </div>
 
-                    <div class="column">
-                        <p class="label">密码</p>
-                        <div class="field"><input type="password" v-model="password" /></div>
-                    </div>
+            <div id="app">
+                <form action="">
+                    <div class="br-content">
 
-                    <div class="column_2">
-                        <div class="remember">
-                            <div class="checkbox"><input type="checkbox" /></div>
-                            <div class="remember_label"><p>记住密码</p></div>
+                        <div class="input-group mb-4 bootint">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text"><i class="fa fa-user"></i></span>
+                            </div>
+                            <input type="text" class="form-control" placeholder="Username" v-model="userName">
+                        </div>
+
+                        <div class="input-group mb-4 bootint">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text"><i class="fa fa-unlock-alt"></i></span>
+                            </div>
+                            <input type="password" class="form-control" placeholder="Your Password" v-model="password">
+                        </div>
+
+                        <div class="br-text">
+                            <p>
+                                <span>忘记密码?</span>
+                                <a href="">找回</a>
+                            </p>
+                        </div>
+                        <div style="padding-top: 10px">
+                            <input type="button" v-on:click="login" class="btn" value="登录">
+                        </div>
+                        <div class="be-con">
+                            <span>Copyright © 2018 - 2019 <a href="">系统登陆</a></span>
                         </div>
                     </div>
-
-                    <div class="column_2">
-                        <p class="forgot_pass"><a href="#">忘记密码</a></p>
-                    </div>
-
-                    <div class="column button">
-                        <a href="#" class="enter" v-on:click="login"><span>登录</span></a>
-                    </div>
-
-                    <div class="clearboth"></div>
-                    </form>
-                </div>
+                </form>
             </div>
+
         </div>
     </div>
+
 </body>
 </html>

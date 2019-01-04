@@ -228,9 +228,10 @@ namespace PhotoCommunity.Web.Api
         /// <returns></returns>
         [Route("DeleteArticle")]
         [HttpPost]
-        public bool DeleteArticle(long articleId) {
+        public bool DeleteArticle([FromBody]long articleId) {
 
-            return _articleService.DeleteArticle(articleId);
+            var result= _articleService.DeleteArticle(articleId);
+            return result;
         }
 
         /// <summary>
@@ -303,6 +304,17 @@ namespace PhotoCommunity.Web.Api
         [HttpGet]
         public int GetArticleCountByClassId(long classId) {
             return _articleService.GetArticleCountByClassId(classId);
+        }
+
+        /// <summary>
+        /// 增加文章已看次数
+        /// </summary>
+        /// <param name="articleId"></param>
+        /// <returns></returns>
+        [Route("UpdateArticleViewCount")]
+        [HttpPost]
+        public bool UpdateArticleViewCount([FromBody]long articleId) {
+           return  _articleService.UpdateArticleViewCount(articleId);
         }
 
     }

@@ -61,7 +61,13 @@
                     articleContext: '',
                     photos: [],
                     articleId: 0,
-                    commentList: []
+                    commentList: [],
+                    commentContext: '',
+                    userLoginName: '',
+                    showUserName: false,
+                    showComment: false,
+                    commentId: 0,
+                    replyComment:''
 
                 },
                 methods: {
@@ -79,11 +85,31 @@
                                 this.$data.articleContext = res.body.articleContext;
                                 this.$data.photos = res.body.photos;
                                 this.$data.articleId = res.body.id;
+                                if (this.$data.userLoginName == res.body.userName) {
+                                    this.$data.showUserName = true;
+                                }
                                 },
                                 function () {
                                     alert("请求发送失败");
                                 }
                             );
+                    },
+                    getUserName: function () {
+                        this.$http.get('/api/user/GetUserName')
+                            .then(
+                                function (res) {
+                                    if (res.body == "false") {
+                                        this.$data.userLoginName = "登录";
+
+                                    }
+                                    else {
+                                        this.$data.userLoginName = res.body;
+                                        this.$data.showComment = true;
+                                    }
+                                },
+                                function () {
+                                    this.$data.userLoginName = "登录";
+                                });
                     },
                     //获取文章评论
                     getComment: function () {
@@ -97,6 +123,56 @@
                                 }
                             );
                     },
+                    addViewCount: function () {
+                        this.$http.post('/api/article/UpdateArticleViewCount', articleId=location.hash.replace('#', ''))
+                            .then(
+                            function (res) { 
+                            
+                            },
+                            function () {
+                                alert("请求发送失败");
+                            }
+                            );
+                    },
+                    //添加评论
+                    addComment: function () {
+                        this.$http.post('/api/comment/AddComment', { "articleId": location.hash.replace('#', ''), "context": this.$data.commentContext })
+                            .then(
+                            function (res) {
+                                window.location.reload();
+                            },
+                            function () {
+                                alert("请求发送失败");
+                                window.location.reload();
+                            }
+                            );
+                    },
+                    //回复评论
+                    addReplyComment: function (commentId) {
+                        this.$http.post('/api/comment/AddReplyComment', { "commentId": commentId, "replyContext": this.$data.replyComment })
+                            .then(
+                                function (res) {
+                                    window.location.reload();
+                                },
+                                function () {
+                                    alert("请求发送失败");
+                                    window.location.reload();
+                                }
+                            );
+                    },
+                    //删除文章
+                    deleteArticle: function () {
+                        this.$http.post('/api/article/DeleteArticle',  articleId=location.hash.replace('#', ''))
+                            .then(
+                            function (res) {
+                                window.location.href = "/photoCommunity/index.html";
+                                alert("删除成功");                               
+                            },
+                            function () {
+                                alert("删除失败");
+                            }
+                            );
+                    },
                     //到编辑页
                     toEditArticle: function () {
                         window.location.href = "/photoCommunity/editArticle.html#" + this.$data.articleId;
@@ -107,8 +183,47 @@
                     }
                 }
             });
+
+            var login = new Vue({
+                el: '#login',
+                data: {
+                    userName: '',
+                    showLogin: true,
+                    showUserName: false,
+                    showRegister: true
+                },
+                methods: {
+                    getUserName: function () {
+                        this.$http.get('/api/user/GetUserName')
+                            .then(
+                                function (res) {
+                                    if (res.body == "false") {
+                                        this.$data.userName = "登录";
+                                        this.$data.showLogin = true;
+                                        this.$data.showUserName = false;
+
+                                    }
+                                    else {
+                                        this.$data.userName = res.body;
+                                        this.$data.showLogin = false;
+                                        this.$data.showUserName = true;
+                                        this.$data.showRegister = false;
+                                    }
+                                },
+                                function () {
+                                    this.$data.userName = "登录";
+                                    this.$data.showLogin = true;
+                                    this.$data.showUserName = false;
+                                });
+                    }
+                }
+            });
+            content.getUserName();
+            login.getUserName();
+            content.addViewCount();
             content.getArticle();
             content.getComment();
+            
         };
     </script>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
@@ -125,17 +240,18 @@
                         	<div class="block_top_menu">
                             	<ul>
                                 	<li class="current"><a href="index.html">主页</a></li>
-                                    <li><a href="typography.html">文章</a></li>
                                     <li><a href="contact.html">联系我们</a></li>
                                 </ul>
                             </div>
                         </div>
                         
-                        <div class="fr">
+                        <div class="fr"  id="login">
                         	<div class="block_top_menu">
-                            	<ul>
-                                	<li class="current"><a href="#login" class="open_popup">登录</a></li>
-                                    <li><a href="registration.html">注册</a></li>
+                                <ul>
+                                    <li class="current" v-if="showLogin"><a href="login.html">登录</a></li>
+                                    <li class="current" v-if="showUserName"><a href="#">{{userName}}</a></li>
+                                    <li v-if="showUserName"><a href="login.html">切换账号</a></li>
+                                    <li v-if="showRegister"><a href="registration.html">注册</a></li>
                                 </ul>
                             </div>
                         </div>
@@ -373,16 +489,15 @@
                             </div>
                             <div class="separator" style="height:4px;"></div>
                             <div class="line_2" style="margin:22px 0px 29px;"></div>
-                                <button v-on:click="toEditArticle">编辑</button>
-                                <button v-on:click="back">返回首页</button>
+                            <button v-on:click="toEditArticle" v-if="showUserName">编辑</button>
+                            <button v-on:click="deleteArticle" v-if="showUserName">删除</button>
+                            <button v-on:click="back">返回首页</button>
                             <div class="line_2" style="margin:5px 0px 30px;"></div>
                         </article>
                         <div class="block_comments_type_2">
-                        	<h3>评论</h3>
-                            <a href="#" class="add_new">Add new comment</a>
+                        	<h3>评论内容</h3>
                             
                             <div class="comment" v-for="comment in commentList">
-                                <div class="userpic"><img src="images/ava_default_1.jpg" alt="" /></a></div>
 
                                 <div class="comment_wrap">
                                     <div class="name"><p>{{comment.userName}}</a></p></div>
@@ -400,8 +515,21 @@
                                         <p>{{replyComment.replyContext}}</p>
                                     </div>
                                 </div>
-                                <a href="#" >添加评论</a>
-                                <a href="#" >回复评论</a>
+
+                                <div class="clearboth"></div>
+                                <div class="line_3"></div>
+
+                                <div class="block_leave_reply" v-if="showComment">
+                                    <p class="text">回复评论内容不得超过250个字 <span>*</span></p>
+
+
+                                    <p>回复内容</p>
+                                    <div class="textarea"><textarea cols="1" rows="1" v-model="replyComment"></textarea></div>
+
+                                    <input type="submit" class="general_button" v-on:click="addReplyComment(comment.id)" value="回复" />
+
+                                </div>
+
                                 <div class="clearboth"></div>
                                 <div class="line_3"></div>
                             </div>
@@ -410,22 +538,16 @@
                         
                         <div class="separator" style="height:30px;"></div>
                         
-                        <div class="block_leave_reply">
-                        	<h3>Leave a Reply</h3>
-                        	<p class="text">Your email address will not be published. Required fields are marked <span>*</span></p>
+                        <div class="block_leave_reply" v-if="showComment">
+                        	<h3>发表评论</h3>
+                        	<p class="text">评论内容不得超过250个字 <span>*</span></p>
                             
-                        	<form class="w_validation" action="#" />
-                            	<p>Name<span>*</span></p>
-                            	<div class="field"><input type="text" class="req" /></div>
+                        	                              
+                                <p>内容</p>
+                                <div class="textarea"><textarea cols="1" rows="1" v-model="commentContext"></textarea></div>
                                 
-                                <p>E-mail<span>*</span></p>
-                            	<div class="field"><input type="text" class="req" /></div>
-                                
-                                <p>Comment</p>
-                                <div class="textarea"><textarea cols="1" rows="1"></textarea></div>
-                                
-                                <input type="submit" class="general_button" value="Post comment" />
-                            </form>
+                                <input type="submit" class="general_button" v-on:click="addComment" value="提交"/>
+                            
                         </div>
                         
                     </div>
@@ -438,55 +560,6 @@
         </div>
     	<!-- CONTENT END -->
     </div>
-    
-    <!-- POPUP BEGIN -->
-    <div id="overlay"></div>
-    <div id="login" class="block_popup">
-    	<div class="popup">
-        	<a href="#" class="close">Close</a>
-            
-            <div class="content">
-            	<div class="title"><p>Enter the site</p></div>
-                
-                <div class="form">
-                	<form action="#" />
-                    	<div class="column">
-                        	<p class="label">Login</p>
-                            <div class="field"><input type="text" /></div>
-                        </div>
-                        
-                        <div class="column">
-                        	<p class="label">Password</p>
-                            <div class="field"><input type="password" /></div>
-                        </div>
-						
-						<div class="column_2">
-                            <div class="remember">
-                            	<div class="checkbox"><input type="checkbox" /></div>
-                                <div class="remember_label"><p>Remember me</p></div>
-                            </div>
-                        </div>
-                        
-                        <div class="column_2">
-                            <p class="forgot_pass"><a href="#">Forgot password?</a></p>
-                        </div>
-                        
-                        <div class="column button">
-                            <a href="#" class="enter"><span>Login</span></a>
-                        </div>
-                        
-                        <div class="clearboth"></div>
-                    </form>
-                </div>
-                
-                <div class="subtitle"><p>SIGN IN AS A USER</p></div>
-                
-                <div class="fb_button"><a href="#"><img src="images/button_fb_login.png" alt="" /></a></div>
-                <div class="text"><p>Use your account on the social network Facebook, to create a profile on BusinessPress</p></div>
-            </div>
-        </div>
-    </div>
-    <!-- POPUP END -->
 </body>
 
 </html>

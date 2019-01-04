@@ -97,7 +97,7 @@ namespace PhotoCommunity.Repository.ArticleDomain.Repository
         /// <param name="classId"></param>
         /// <returns></returns>
         public List<Article> GetArticleByClassId(int pageSize, int pageIndex,long classId) {
-            return _myDbContext.ArticleRepository.Where(x => x.ClassId == classId)
+            return _myDbContext.ArticleRepository.Where(x => x.ClassId == classId&&x.IsDelete==false)
                 .OrderByDescending(x=>x.Id)
                 .Skip(pageSize * (pageIndex - 1))
                 .Take(pageSize).ToList();

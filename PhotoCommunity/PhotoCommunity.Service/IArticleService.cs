@@ -56,6 +56,20 @@ namespace PhotoCommunity.Service
         /// <returns></returns>
         int GetArticleCountByClassId(long classId);
 
+        /// <summary>
+        /// 更新文章已看数量
+        /// </summary>
+        /// <param name="articleId"></param>
+        /// <returns></returns>
+        bool UpdateArticleViewCount(long articleId);
+
+        /// <summary>
+        /// 更新文章评论数量
+        /// </summary>
+        /// <param name="articleId"></param>
+        /// <returns></returns>
+        bool UpdateArticleCommentCount(long articleId);
+
 
     }
 }

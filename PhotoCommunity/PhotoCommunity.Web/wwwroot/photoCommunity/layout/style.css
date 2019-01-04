@@ -1,4 +1,4 @@
-@charset 'utf-8';
+﻿@charset 'utf-8';
 
 /* =Reset default browser CSS. Based on work by Eric Meyer: http://meyerweb.com/eric/tools/css/reset/index.html
 -------------------------------------------------------------- */
@@ -3011,7 +3011,7 @@ input.general_button {margin:0px; padding:0px 15px 4px; border:0px; cursor:point
 
 /* Responsive styles */
 @media (max-width: 949px) {
-	.block_color_picker {display:none;}
+
 
 	.wrapper {border:0px !important;}
 	.inner {width:750px; padding:0px 9px;}

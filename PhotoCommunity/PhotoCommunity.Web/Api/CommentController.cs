@@ -20,13 +20,15 @@ namespace PhotoCommunity.Web.Api
     {
         private ICommentService _commentService;
         private IUserService _userService;
+        private IArticleService _articleService;
 
         /// <summary>
         /// 构造函数注入
         /// </summary>
-        public CommentController(ICommentService commentService,IUserService userService) {
+        public CommentController(ICommentService commentService,IUserService userService,IArticleService articleService) {
             _commentService = commentService;
             _userService = userService;
+            _articleService = articleService;
         }
 
         /// <summary>
@@ -37,8 +39,12 @@ namespace PhotoCommunity.Web.Api
         [Route("AddComment")]
         [HttpPost]
         public bool AddComment(AddCommentRequest request) {
+            var userName=HttpContext.Session.GetString("username");
+            var userId = _userService.GetUserIdByUserName(userName);
             var model = AutoMapper.Mapper.Map<CommentModel>(request);
             model.CommentTime = DateTime.Now.Date;
+            model.UserId = userId;
+            _articleService.UpdateArticleCommentCount(request.ArticleId);
             return _commentService.AddComment(model);
         }
 
@@ -50,8 +56,11 @@ namespace PhotoCommunity.Web.Api
         [Route("AddReplyComment")]
         [HttpPost]
         public bool AddReplyComment(AddReplyCommentRequest request) {
+            var userName = HttpContext.Session.GetString("username");
+            var userId = _userService.GetUserIdByUserName(userName);
             var model = AutoMapper.Mapper.Map<ReplyCommentModel>(request);
             model.CreateTime = DateTime.Now.Date;
+            model.UserId = userId;
             return _commentService.AddReplyComment(model);
         }
 

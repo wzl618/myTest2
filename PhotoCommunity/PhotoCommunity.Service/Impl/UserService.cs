@@ -54,5 +54,14 @@ namespace PhotoCommunity.Service.Impl
         public string GetUserNameById(long userId) {
             return _userRepository.GetUserNameById(userId);
         }
+
+        /// <summary>
+        /// 根据用户名获取用户Id
+        /// </summary>
+        /// <param name="userName"></param>
+        /// <returns></returns>
+        public long GetUserIdByUserName(string userName) {
+            return _userRepository.GetUserIdByUserName(userName);
+        }
     }
 }

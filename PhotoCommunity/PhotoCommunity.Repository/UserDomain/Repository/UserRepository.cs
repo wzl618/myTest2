@@ -27,9 +27,13 @@ namespace PhotoCommunity.Repository.UserDomain.Repository
         /// 检查用户
         /// </summary>
         public bool CheckUser(string userName) {
-            var sql = "select id from user where username=@userName";
-            //return _dbContext.Database.ExecuteSqlCommand(sql,new { userName})>0;
-            return _dbContext.UserRepository.FromSql(sql,new { userName }).FirstOrDefaultAsync().Id>0;
+            if (_dbContext.UserRepository.Where(x => x.UserName == userName).FirstOrDefault() == null)
+            {
+                return false;
+            }
+            else {
+                return true;
+            }
         }
 
         /// <summary>
@@ -48,6 +52,15 @@ namespace PhotoCommunity.Repository.UserDomain.Repository
         /// <returns></returns>
         public string GetUserNameById(long userId) {
             return _dbContext.UserRepository.Where(x => x.Id == userId).FirstOrDefault().UserName;
+        }
+
+        /// <summary>
+        /// 根据用户名称获取用户Id
+        /// </summary>
+        /// <param name="userName"></param>
+        /// <returns></returns>
+        public long GetUserIdByUserName(string userName) {
+            return _dbContext.UserRepository.Where(x => x.UserName == userName).FirstOrDefault().Id;
         }
     }
 }

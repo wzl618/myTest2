@@ -30,5 +30,12 @@ namespace PhotoCommunity.Repository.UserDomain.Repository
         /// <param name="userId"></param>
         /// <returns></returns>
         string GetUserNameById(long userId);
+
+        /// <summary>
+        /// 根据用户名称获取用户Id
+        /// </summary>
+        /// <param name="userName"></param>
+        /// <returns></returns>
+        long GetUserIdByUserName(string userName);
     }
 }

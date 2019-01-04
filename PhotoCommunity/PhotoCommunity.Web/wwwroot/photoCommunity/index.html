@@ -85,7 +85,7 @@
                             this.$data.articleList = res.body;
                             },
                             function () {
-                                alert("请求发送失败");
+                                //alert("请求发送失败1");
                             }
                         );
                 },
@@ -98,7 +98,7 @@
                             this.$data.articleList = res.body;
                             },
                             function () {
-                                alert("请求发送失败");
+                                //alert("请求发送失败2");
                             }
                         );
                 },
@@ -117,7 +117,7 @@
                                 this.$data.articleList = res.body;
                             },
                             function () {
-                                alert("请求发送失败");
+                                //alert("请求发送失败3");
                             }
                         );
                 },
@@ -137,7 +137,7 @@
                                 this.$data.articleList = res.body;
                             },
                             function () {
-                                alert("请求发送失败");
+                                //alert("请求发送失败4");
                             }
                         );
                 },
@@ -158,7 +158,7 @@
                             this.$data.pageIndexs = list;
                         },
                         function () {
-                            alert("请求发送失败");
+                            //alert("请求发送失败5");
                         }
                         );
 
@@ -170,23 +170,32 @@
             el: '#login',
             data: {
                 userName: '',
-                password: ''
+                showLogin: true,
+                showUserName: false,
+                showRegister: true
             },
             methods: {
-                login: function () {
-                    this.$http.post('/api/user/UserLogin', {
-                        "userName": this.$data.userName,
-                        "password": this.$data.password
-                        })
+                getUserName: function () {
+                    this.$http.get('/api/user/GetUserName')
                         .then(
                         function (res) {
-                            this.$data.canSee = false;
-                            window.location.href = "/photoCommunity/index.html";
-                                alert('登录成功');
-                                
+                            if (res.body == "false") {
+                                this.$data.userName = "登录";
+                                this.$data.showLogin = true;
+                                this.$data.showUserName = false;
+
+                            }
+                            else {
+                                this.$data.userName = res.body;
+                                this.$data.showLogin = false;
+                                this.$data.showUserName = true;
+                                this.$data.showRegister = false;
+                            }    
                             },
                             function () {
-                                alert('登录失败');   //失败处理
+                                this.$data.userName = "登录";
+                                this.$data.showLogin = true;
+                                this.$data.showUserName = false;
                             });
                 }               
             }
@@ -209,7 +218,7 @@
                             this.$data.articleList = res.body;
                             },
                             function () {
-                                alert("请求发送失败");
+                                //alert("请求发送失败6");
                             }
                         );
                 }
@@ -233,7 +242,7 @@
                                 this.$data.articleList = res.body;
                             },
                             function () {
-                                alert("请求发送失败");
+                                //alert("请求发送失败7");
                             }
                         );
                 }
@@ -242,6 +251,7 @@
         article1.getArticleList();
         article2.getArticleList();
         app.getArticleCount();
+        login.getUserName();
     };
 </script>
 
@@ -258,17 +268,18 @@
                         	<div class="block_top_menu">
                             	<ul>
                                 	<li class="current"><a href="index.html">主页</a></li>
-                                    <li><a href="typography.html">文章</a></li>
                                     <li><a href="contact.html">联系我们</a></li>
                                 </ul>
                             </div>
                         </div>
                         
-                        <div class="fr" id="app1">
+                        <div class="fr" id="login">
                         	<div class="block_top_menu">
                             	<ul>
-                                	<li class="current"><a href="/photoCommunity/login.html" class="open_popup">登录</a></li>
-                                    <li><a href="registration.html">注册</a></li>
+                                	<li class="current" v-if="showLogin"><a href="login.html">登录</a></li>
+                                    <li class="current" v-if="showUserName"><a href="#">{{userName}}</a></li>
+                                    <li v-if="showUserName"><a href="login.html">切换账号</a></li>
+                                    <li v-if="showRegister"><a href="registration.html">注册</a></li>
                                 </ul>
                             </div>
                         </div>

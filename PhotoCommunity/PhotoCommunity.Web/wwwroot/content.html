@@ -1,0 +1,565 @@
+﻿<!DOCTYPE html>
+<html>
+
+<head>
+    <title>BusinessNews - Business</title>
+    <meta name="keywords" content="" />
+    <meta name="description" content="" />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <!--[if lt IE 9]>
+    <script type="text/javascript" src="layout/plugins/html5.js"></script>
+    <![endif]-->
+    <link rel="stylesheet" href="layout/style.css" type="text/css" />
+    <link href="http://fonts.googleapis.com/css?family=PT+Sans:400,700" rel="stylesheet" type="text/css" />
+    <link href="http://fonts.googleapis.com/css?family=PT+Sans+Narrow:400,700" rel="stylesheet" type="text/css" />
+    <link href="http://fonts.googleapis.com/css?family=Droid+Serif:400,400italic" rel="stylesheet" type="text/css" />
+    <script type="text/javascript" src="layout/js/jquery.js"></script>
+    <!-- PrettyPhoto start -->
+    <link rel="stylesheet" href="layout/plugins/prettyphoto/css/prettyPhoto.css" type="text/css" />
+    <script type="text/javascript" src="layout/plugins/prettyphoto/jquery.prettyPhoto.js"></script>
+    <!-- PrettyPhoto end -->
+    <!-- jQuery tools start -->
+    <script type="text/javascript" src="layout/plugins/tools/jquery.tools.min.js"></script>
+    <!-- jQuery tools end -->
+    <!-- Calendar start -->
+    <link rel="stylesheet" href="layout/plugins/calendar/calendar.css" type="text/css" />
+    <script type="text/javascript" src="layout/plugins/calendar/calendar.js"></script>
+    <!-- Calendar end -->
+    <!-- ScrollTo start -->
+    <script type="text/javascript" src="layout/plugins/scrollto/jquery.scroll.to.min.js"></script>
+    <!-- ScrollTo end -->
+    <!-- MediaElements start -->
+    <link rel="stylesheet" href="layout/plugins/video-audio/mediaelementplayer.css" />
+    <script src="layout/plugins/video-audio/mediaelement-and-player.js"></script>
+    <!-- MediaElements end -->
+    <!-- FlexSlider start -->
+    <link rel="stylesheet" href="layout/plugins/flexslider/flexslider.css" type="text/css" />
+    <script type="text/javascript" src="layout/plugins/flexslider/jquery.flexslider-min.js"></script>
+    <!-- FlexSlider end -->
+    <!-- iButtons start -->
+    <link rel="stylesheet" href="layout/plugins/ibuttons/css/jquery.ibutton.css" type="text/css" />
+    <script type="text/javascript" src="layout/plugins/ibuttons/lib/jquery.ibutton.min.js"></script>
+    <!-- iButtons end -->
+    <!-- jQuery Form Plugin start -->
+    <script type="text/javascript" src="layout/plugins/ajaxform/jquery.form.js"></script>
+    <!-- jQuery Form Plugin end -->
+    <script type="text/javascript" src="layout/js/main.js"></script>
+    <script src="layout/js/vue.js" language="javascript"></script>
+    <script src="layout/js/vue-resource.js" language="javascript"></script>
+
+    <script type="text/javascript">
+        window.onload = function () {
+            var login = new Vue({
+                el: '#header',
+                data: {
+                    userName: '',
+                    showLogin: true,
+                    showUserName: false,
+                    showRegister: true,
+                    allTags: [],
+                    activeTag: 0
+                },
+                //初始化加载
+                mounted: function () {
+                    this.getTagIdFirst();
+                },
+                methods: {
+                    getUserName: function () {
+                        this.$http.get('/api/user/GetUserName')
+                            .then(
+                                function (res) {
+                                    if (res.body == "false") {
+                                        this.$data.userName = "登录";
+                                        this.$data.showLogin = true;
+                                        this.$data.showUserName = false;
+
+                                    }
+                                    else {
+                                        this.$data.userName = res.body;
+                                        this.$data.showLogin = false;
+                                        this.$data.showUserName = true;
+                                        this.$data.showRegister = false;
+                                    }
+                                },
+                                function () {
+                                    this.$data.userName = "登录";
+                                    this.$data.showLogin = true;
+                                    this.$data.showUserName = false;
+                                });
+                    },
+                    //获取所有标签
+                    getAllTags: function () {
+                        this.$http.get('api/tag/GetAllTag')
+                            .then(
+                                function (res) {
+                                    this.$data.allTags = res.body;
+                                },
+                                function () {
+                                    alert("请求获取失败");
+                                }
+                            );
+                    },
+
+                    //将TagId赋值实现点击按钮设置当前页
+                    getTagId: function (id) {
+                        this.$data.activeTag = id;
+                        content.getArticleTagId();
+                        content.getTagName(id);
+                        window.location.href = "content.html#" + id;
+                        content.getArticle();
+                        content.getArticleCount();
+                    },
+
+                    getTagIdFirst: function () {
+                        this.$data.activeTag = location.hash.replace('#', '');
+                    }
+
+                }
+            });
+
+            var content = new Vue({
+                el: '#main_content',
+                data: {
+                    tagName: '',
+                    articleList: [],
+                    tagId: 0,
+                    pageSize: 4,
+                    pageIndex: 1,
+                    pageIndexs: [],
+                    activeClass: 1
+                },
+                //初始化加载
+                mounted: function () {
+                    this.getTagNameFirst();
+                    this.getArticle();
+                },
+                methods: {
+                    getTagNameFirst: function () {
+                        this.$http.get('api/tag/GetTagById?tagId=' + location.hash.replace('#', ''))
+                            .then(
+                            function (res) {
+                                this.$data.tagName = res.body.tagName;
+                            },
+                            function () {
+                                alert("请求发送失败");
+                            }
+                            );
+                    },
+                    getTagName: function (id) {
+                        this.$http.get('api/tag/GetTagById?tagId=' + id)
+                            .then(
+                                function (res) {
+                                    this.$data.tagName = res.body.tagName;
+                                },
+                                function () {
+                                    alert("请求发送失败");
+                                }
+                            );
+                    },
+                    getArticle: function () {
+                        content.getArticleTagId();
+                        this.$http.get("/api/article/GetArtilceByTagId?tagId=" + location.hash.replace('#', '') + "&pageSize=" + this.$data.pageSize + "&pageIndex=" + this.$data.pageIndex)
+                            .then(
+                                function (res) {
+                                    this.$data.articleList = res.body;
+                                },
+                                function () {
+                                    //alert("请求发送失败1");
+                                }
+                            );
+                    },
+                    //根据分页去获取文章信息
+                    getArticleIndex: function (index) {
+                        content.getArticleTagId();
+                        this.$http.get("/api/article/GetArtilceByTagId?tagId=" + location.hash.replace('#', '') + "&pageSize=" + this.$data.pageSize + "&pageIndex=" + index)
+                            .then(
+                                function (res) {
+                                    this.$data.activeClass = index;
+                                    this.$data.articleList = res.body;
+                                },
+                                function () {
+                                    //alert("请求发送失败2");
+                                }
+                            );
+                    },
+                    //上一页获取文章信息
+                    getArticleIndexPrev: function (index) {
+                        content.getArticleTagId();
+                        if (index == 1) {
+                            index = 1;
+                        }
+                        else {
+                            index = index - 1;
+                        }
+                        this.$http.get("/api/article/GetArtilceByTagId?tagId=" + location.hash.replace('#', '')+ "&pageSize=" + this.$data.pageSize + "&pageIndex=" + index)
+                            .then(
+                                function (res) {
+                                    this.$data.activeClass = index;
+                                    this.$data.articleList = res.body;
+                                },
+                                function () {
+                                    //alert("请求发送失败3");
+                                }
+                            );
+                    },
+
+                    //下一页获取文章信息
+                    getArticleIndexNext: function (index) {
+                        content.getArticleTagId();
+                        if (index == this.$data.pageIndexs[this.$data.pageIndexs.length - 1]) {
+                            index = this.$data.pageIndexs[this.$data.pageIndexs.length - 1];
+                        }
+                        else {
+                            index = index + 1;
+                        }
+                        this.$http.get("/api/article/GetArtilceByTagId?tagId=" + location.hash.replace('#', '') + "&pageSize=" + this.$data.pageSize + "&pageIndex=" + index)
+                            .then(
+                                function (res) {
+                                    this.$data.activeClass = index;
+                                    this.$data.articleList = res.body;
+                                },
+                                function () {
+                                    //alert("请求发送失败4");
+                                }
+                            );
+                    },
+
+                    getArticleCount: function () {
+                        this.$http.get("/api/article/GetArticleCountByTagId?tagId=" + location.hash.replace('#', ''))
+                            .then(
+                                function (res) {
+                                    var list = new Array();
+                                    var i = res.body / this.$data.pageSize;
+                                    if (i % this.$data.pageSize > 0) {
+                                        i = i + 1;
+                                    }
+                                    for (var j = 1; j <= i; j++) {
+                                        list[j - 1] = j;
+                                    }
+
+                                    this.$data.pageIndexs = list;
+                                },
+                                function () {
+                                    //alert("请求发送失败5");
+                                }
+                            );
+
+                    },
+
+                    getArticleTagId: function () {
+                        this.$data.tagId = location.hash.replace('#', '');
+                    }
+                }
+            });
+            login.getUserName();
+            login.getAllTags();
+            content.getArticleCount();
+            content.getArticleTagId();
+            content.getArticle();
+        };
+    </script>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+</head>
+
+<body>
+    <div class="wrapper sticky_footer">
+        <!-- HEADER BEGIN -->
+        <header>
+            <div id="header">
+                <section class="top">
+                    <div class="inner">
+                        <div class="fl">
+                            <div class="block_top_menu">
+                                <ul>
+                                    <li class="current"><a href="index.html">主页</a></li>
+                                    <li><a href="contact.html">联系我们</a></li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div class="fr">
+                            <div class="block_top_menu">
+                                <ul>
+                                    <li class="current" v-if="showLogin"><a href="demo.html">登录&注册</a></li>
+                                    <li class="current" v-if="showUserName"><a href="#">{{userName}}</a></li>
+                                    <li v-if="showUserName"><a href="demo.html">切换账号</a></li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div class="clearboth"></div>
+                    </div>
+                </section>
+
+                <section class="bottom">
+                    <div class="inner">
+                        <div id="logo_top"><h3>PhotoCommunity<br>摄影图片分享交流网站<br>连接摄影爱好者的桥梁</h3></div>
+
+                        <div class="block_today_date">
+                            <div class="num"><p id="num_top" /></div>
+                            <div class="other">
+                                <p class="month_year"><span id="month_top"></span>, <span id="year_top"></span></p>
+                                <p id="day_top" class="day" />
+                            </div>
+                        </div>
+
+                        <div class="fr">
+                            <div class="block_languages">
+                                <div class="clearboth"></div>
+                            </div>
+
+                            <div class="block_search_top">
+                                <form action="#" />
+                                <div class="field"><input type="text" class="w_def_text" title="搜索文章" /></div>
+                                <input type="submit" class="button" value="Search" />
+
+                                <div class="clearboth"></div>
+                                </form>
+                            </div>
+                        </div>
+
+                        <div class="clearboth"></div>
+                    </div>
+                </section>
+
+                <section class="section_main_menu">
+                    <div class="inner">
+                        <nav class="main_menu">
+                            <ul>
+                                <li class="big_dropdown">
+                                    <a href="index.html">主页</a>
+                                </li>
+
+                                <li v-for="tag in allTags" v-bind:class="activeTag == tag.id?'current_page_item':'big_dropdown'" data-content="business" v-on:click="getTagId(tag.id)"><a :href="'content.html#'+tag.id">{{tag.tagName}}</a></li>
+                                <li>
+                                    <a href="media.html">Media</a>
+
+                                    <ul>
+                                        <li><a href="media.html">Media</a></li>
+                                        <li><a href="media_item.html">Media Item Page</a></li>
+                                    </ul>
+                                </li>
+                                <li>
+                                    <a href="#">Pages</a>
+
+                                    <ul>
+                                        <li><a href="about.html">About Us</a></li>
+                                        <li><a href="about_author.html">About Author Page</a></li>
+                                        <li><a href="contact.html">Contact Us</a></li>
+                                        <li><a href="registration.html">Registration Page</a></li>
+                                        <li><a href="main_news.html">Main News Page</a></li>
+                                        <li><a href="news_post_w_slider.html">News Post With Slider</a></li>
+                                        <li><a href="news_post_w_video.html">News Post With Video</a></li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </nav>
+                    </div>
+                </section>
+
+
+                <section class="section_secondary_menu">
+                    <div class="inner">
+                        <div class="block_clock">
+                            <p>Time: <span id="time"></span></p>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </header>
+        <!-- HEADER END -->
+        <!-- CONTENT BEGIN -->
+        <div id="content" class="right_sidebar">
+            <div class="inner">
+                <div class="general_content">
+                    <div class="main_content" id="main_content">
+                        <div class="separator" style="height:30px;"></div>
+
+                        <h2>{{tagName}}</h2>
+
+                        <p class="general_subtitle">以下是标签：{{tagName}}的内容</p>
+
+                        <div class="line_4" style="margin:0px 0px 18px;"></div>
+
+                        <div class="line_2" style="margin:21px 0px 21px;"></div>
+
+                        <div class="block_topic_news">
+                            <article v-for="list in articleList" class="block_topic_post">
+                                <p class="title"><a :href="'news_post.html#'+list.id">{{list.articleTitle}}</a></p>
+                                <div class="f_pic"><a :href="'news_post.html#'+list.id" class="general_pic_hover scale"><img :src="list.photos[0].url" alt=""  width="256" height="151"/></a></div>
+                                <div class="info">
+                                    <div class="date"><p>{{list.createTimeStr}}</p></div>
+
+                                    <div class="r_part">
+                                        <div class="category"><p><a href="#">{{list.tagName}}</a></p></div>
+                                        <div class="category"><p><a href="#">{{list.className}}</a></p></div>
+                                        <a href="#" class="views">{{list.viewCount}}</a>
+                                    </div>
+                                </div>
+                            </article>
+                        </div>
+
+                        <div class="line_2" style="margin:25px 0px 25px;"></div>
+
+                        <div class="block_pager">
+                            <a :href="'content.html#'+tagId" class="prev" v-on:click="getArticleIndexPrev(activeClass)">上一页</a>
+                            <a :href="'content.html#'+tagId" class="next" v-on:click="getArticleIndexNext(activeClass)">下一页</a>
+
+                            <div class="pages">
+                                <ul>
+                                    <li v-for="pageIndex in pageIndexs" v-bind:class="activeClass == pageIndex?'current':''"><a :href="'content.html#'+tagId" v-on:click="getArticleIndex(pageIndex)">{{pageIndex}}</a></li>
+                                </ul>
+                            </div>
+
+                            <div class="clearboth"></div>
+                        </div>
+
+                    </div>
+
+                    <div class="sidebar">
+
+                        <div class="separator" style="height:31px;"></div>
+
+                        <div class="block_popular_posts">
+                            <h4>Popular Posts</h4>
+
+                            <div class="article">
+                                <div class="pic">
+                                    <a href="#" class="w_hover">
+                                        <img src="images/pic_popular_post_1.jpg" alt="" />
+                                        <span></span>
+                                    </a>
+                                </div>
+
+                                <div class="text">
+                                    <p class="title"><a href="#">Packages and web page editors their default text.</a></p>
+                                    <div class="date"><p>11 July, 2012</p></div>
+                                    <div class="icons">
+                                        <ul>
+                                            <li><a href="#" class="views">41</a></li>
+                                            <li><a href="#" class="comments">22</a></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="line_3"></div>
+
+                            <div class="article">
+                                <div class="pic">
+                                    <a href="#" class="w_hover">
+                                        <img src="images/pic_popular_post_2.jpg" alt="" />
+                                        <span></span>
+                                    </a>
+                                </div>
+
+                                <div class="text">
+                                    <p class="title"><a href="#">Web page editors their default model text, and a search for.</a></p>
+                                    <div class="date"><p>07 July, 2012</p></div>
+                                    <div class="icons">
+                                        <ul>
+                                            <li><a href="#" class="views">24</a></li>
+                                            <li><a href="#" class="comments">16</a></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="line_3"></div>
+
+                            <div class="article">
+                                <div class="pic">
+                                    <a href="#" class="w_hover">
+                                        <img src="images/pic_popular_post_3.jpg" alt="" />
+                                        <span></span>
+                                    </a>
+                                </div>
+
+                                <div class="text">
+                                    <p class="title"><a href="#">Editors their default model text, and a search uncover.</a></p>
+                                    <div class="date"><p>05 July, 2012</p></div>
+                                    <div class="icons">
+                                        <ul>
+                                            <li><a href="#" class="views">33</a></li>
+                                            <li><a href="#" class="comments">25</a></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="line_2"></div>
+                        </div>
+
+                        <div class="separator" style="height:31px;"></div>
+
+
+                        <div class="separator" style="height:31px;"></div>
+
+                        <div class="block_calendar">
+                            <h4>日历</h4>
+
+                            <div class="calendar" id="calendar_sidebar">
+                            </div>
+
+                            <script type="text/javascript">
+                                var today = new Date();
+                                var date = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate();
+                                $('#calendar_sidebar').DatePicker({
+                                    flat: true,
+                                    date: date,
+                                    calendars: 1,
+                                    starts: 1,
+                                    locale: {
+                                        days: ['周日', '周一', '周二', '周三', '周四', '周五', '周六', '周日'],
+                                        daysShort: ['周日', '周一', '周二', '周三', '周四', '周五', '周六', '周日'],
+                                        daysMin: ['周日', '周一', '周二', '周三', '周四', '周五', '周六', '周日'],
+                                        months: ['一月', '二月', '三月', '四月', '五月', '六月', '七月', '八月', '九月', '十月', '十一月', '十二月'],
+                                        monthsShort: ['一月', '二月', '三月', '四月', '五月', '六月', '七月', '八月', '九月', '十月', '十一月', '十二月'],
+                                        weekMin: 'wk'
+                                    }
+                                });
+                            </script>
+
+                            <div class="line_2"></div>
+                        </div>
+
+                        <div class="separator" style="height:31px;"></div>
+
+                        <div class="separator" style="height:31px;"></div>
+
+                        <div class="block_popular_stuff">
+                            <h4>Popular Photo</h4>
+
+                            <div class="content">
+                                <a href="#" class="view_all">Show all photos</a>
+                                <div class="media"><a href="images/pic_pop_photo_big.jpg" class="general_pic_hover zoom no_fx" data-rel="prettyPhoto" title="Popular Photo"><img src="images/pic_pop_photo.jpg" alt="" /></a></div>
+                                <p><a href="blog_post_w_slider.html">Editors their default model text, and a search for will uncover many.</a> <img src="images/icon_photo.gif" alt="" /></p>
+                                <p class="date">11 July, 2012</p>
+                            </div>
+
+                            <div class="info">
+                                <ul>
+                                    <li class="comments"><a href="#">100</a></li>
+                                    <li class="views"><a href="#">134</a></li>
+                                </ul>
+                            </div>
+
+                            <div class="clearboth"></div>
+
+                            <div class="line_2"></div>
+                        </div>
+
+                        <div class="separator" style="height:31px;"></div>
+
+                    </div>
+
+                    <div class="clearboth"></div>
+                </div>
+            </div>
+        </div>
+        <!-- CONTENT END -->
+
+
+    </div>
+
+</body>
+
+</html>

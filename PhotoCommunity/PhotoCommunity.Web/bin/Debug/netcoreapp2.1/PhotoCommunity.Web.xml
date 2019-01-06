@@ -89,6 +89,22 @@
             <param name="articleId"></param>
             <returns></returns>
         </member>
+        <member name="M:PhotoCommunity.Web.Api.ArticleController.GetArtilceByTagId(System.Int32,System.Int32,System.Int64)">
+            <summary>
+            根据标签Id获取文章信息
+            </summary>
+            <param name="pageSize"></param>
+            <param name="pageIndex"></param>
+            <param name="tagId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:PhotoCommunity.Web.Api.ArticleController.GetArticleCountByTagId(System.Int64)">
+            <summary>
+            根据标签Id获取文章数量
+            </summary>
+            <param name="tagId"></param>
+            <returns></returns>
+        </member>
         <member name="T:PhotoCommunity.Web.Api.ClassController">
             <summary>
             大类
@@ -199,6 +215,13 @@
             <summary>
             获取所有标签数据
             </summary>
+            <returns></returns>
+        </member>
+        <member name="M:PhotoCommunity.Web.Api.TagController.GetTagById(System.Int64)">
+            <summary>
+            根据标签Id获取标签
+            </summary>
+            <param name="tagId"></param>
             <returns></returns>
         </member>
         <member name="T:PhotoCommunity.Web.Api.UserController">
@@ -582,6 +605,16 @@
         <member name="P:PhotoCommunity.Web.Models.Request.UserRegisterRequest.Password">
             <summary>
             密码
+            </summary>
+        </member>
+        <member name="P:PhotoCommunity.Web.Models.Request.UserRegisterRequest.Telephone">
+            <summary>
+            手机号码
+            </summary>
+        </member>
+        <member name="P:PhotoCommunity.Web.Models.Request.UserRegisterRequest.UserContext">
+            <summary>
+            用户简介
             </summary>
         </member>
         <member name="T:PhotoCommunity.Web.Models.Response.ClassResponse">

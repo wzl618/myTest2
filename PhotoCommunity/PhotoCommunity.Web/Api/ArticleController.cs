@@ -107,13 +107,29 @@ namespace PhotoCommunity.Web.Api
                 m = m.NextMatch();
             }
 
-            foreach (var src in srcArr) {
-                var photo = new AddPhotoRequest() {
-                    ArticleId=articleId,
-                    Url=src
+
+
+            if (srcArr.Count() > 0)
+            {
+                foreach (var src in srcArr)
+                {
+                    var photo = new AddPhotoRequest()
+                    {
+                        ArticleId = articleId,
+                        Url = src
+                    };
+                    _photoService.AddPhoto(AutoMapper.Mapper.Map<PhotoModel>(photo));
+                }
+            }
+            else {
+                var photo = new AddPhotoRequest()
+                {
+                    ArticleId = articleId,
+                    Url = "images/pic_home_news_1.jpg"
                 };
                 _photoService.AddPhoto(AutoMapper.Mapper.Map<PhotoModel>(photo));
             }
+
             return true;
         }
 
@@ -170,7 +186,12 @@ namespace PhotoCommunity.Web.Api
             var deleteRes = _photoService.DeletePhotoByArticleId(request.ArticleId);
             if (deleteRes == false)
             {
-                return false;
+                var addPhoto = new AddPhotoRequest()
+                {
+                    ArticleId = request.ArticleId,
+                    Url = "images/pic_home_news_1.jpg"
+                };
+                _photoService.AddPhoto(AutoMapper.Mapper.Map<PhotoModel>(addPhoto));
             }
             //增加图片
             foreach (var src in srcArr)
@@ -182,6 +203,11 @@ namespace PhotoCommunity.Web.Api
                 };
                 _photoService.AddPhoto(AutoMapper.Mapper.Map<PhotoModel>(photo));
             }
+
+           
+            
+
+
             return true;
         }
 
@@ -317,5 +343,51 @@ namespace PhotoCommunity.Web.Api
            return  _articleService.UpdateArticleViewCount(articleId);
         }
 
+
+        /// <summary>
+        /// 根据标签Id获取文章信息
+        /// </summary>
+        /// <param name="pageSize"></param>
+        /// <param name="pageIndex"></param>
+        /// <param name="tagId"></param>
+        /// <returns></returns>
+        [Route("GetArtilceByTagId")]
+        [HttpGet]
+        public List<GetArticleResponse> GetArtilceByTagId(int pageSize, int pageIndex, long tagId)
+        {
+            var articleList = _articleService.GetArticleByTagId(pageSize, pageIndex, tagId);
+
+            if (articleList == null && articleList.Count == 0)
+            {
+                return new List<GetArticleResponse>();
+            }
+            var getArticleResponse = AutoMapper.Mapper.Map<List<GetArticleResponse>>(articleList);
+            foreach (var article in articleList)
+            {
+
+                var photos = _photoService.GetPhotosByArticleId(article.Id);
+                if (photos != null)
+                {
+                    getArticleResponse.Where(x => x.Id == article.Id).FirstOrDefault().Photos = AutoMapper.Mapper.Map<List<PhotoResponse>>(photos);
+                }
+                getArticleResponse.Where(x => x.Id == article.Id).FirstOrDefault().ClassName = _classService.GetClassById(article.ClassId).ClassName;
+                getArticleResponse.Where(x => x.Id == article.Id).FirstOrDefault().TagName = _tagService.GetTag(article.TagId).TagName;
+                getArticleResponse.Where(x => x.Id == article.Id).FirstOrDefault().CreateTimeStr = Convert.ToDateTime(article.CreateTime).ToString("yyyy-MM-dd");
+
+            }
+            return getArticleResponse;
+        }
+
+        /// <summary>
+        /// 根据标签Id获取文章数量
+        /// </summary>
+        /// <param name="tagId"></param>
+        /// <returns></returns>
+        [Route("GetArticleCountByTagId")]
+        [HttpGet]
+        public int GetArticleCountByTagId(long tagId)
+        {
+            return _articleService.GetArticleCountByTagId(tagId);
+        }
     }
 }

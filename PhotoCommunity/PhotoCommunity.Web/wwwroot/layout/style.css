@@ -1210,7 +1210,7 @@ nav.secondary_menu > ul > li:first-child > a {padding-left:0px;}
 .block_topic_post .title a {font-size:13px; color:#383838; font-weight:bold;}
 .block_topic_post .title a:hover {color:#f24024; text-decoration:none;}
 .block_topic_post .f_pic {margin-bottom:13px; padding:1px; display:inline-block; background-color:#ffffff; border:4px solid #f2f2f2; line-height:0px;}
-.block_topic_post .f_pic img {width:256px; height:auto;}
+.block_topic_post .f_pic img {width:256px; height:150px;}
 .block_topic_post .text {padding-bottom:15px; color:#666666; line-height:18px;}
 .block_topic_post .text a {color:#666666;}
 .block_topic_post .info {height:40px; border-top:1px solid #f0f0f0;}

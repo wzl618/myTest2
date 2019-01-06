@@ -1,9 +1,10 @@
-﻿using Microsoft.EntityFrameworkCore.Metadata;
+﻿using System;
+using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace PhotoCommunity.Repository.Migrations
 {
-    public partial class create : Migration
+    public partial class Create : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -16,11 +17,13 @@ namespace PhotoCommunity.Repository.Migrations
                     ClassId = table.Column<long>(nullable: false),
                     TagId = table.Column<long>(nullable: false),
                     ArticleTitle = table.Column<string>(maxLength: 100, nullable: false),
-                    ArticleContext = table.Column<string>(maxLength: 500, nullable: false),
+                    ArticleContext = table.Column<string>(nullable: false),
                     IsDelete = table.Column<bool>(nullable: false),
+                    CreateTime = table.Column<DateTime>(nullable: false),
                     UserName = table.Column<string>(maxLength: 100, nullable: false),
                     ViewCount = table.Column<int>(nullable: false),
-                    CommmentCount = table.Column<int>(nullable: false)
+                    CommentCount = table.Column<int>(nullable: false),
+                    Context = table.Column<string>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -33,7 +36,7 @@ namespace PhotoCommunity.Repository.Migrations
                 {
                     Id = table.Column<long>(nullable: false)
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
-                    ClassName = table.Column<string>(nullable: true)
+                    ClassName = table.Column<string>(maxLength: 100, nullable: false)
                 },
                 constraints: table =>
                 {
@@ -41,18 +44,19 @@ namespace PhotoCommunity.Repository.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "commment",
+                name: "comment",
                 columns: table => new
                 {
                     Id = table.Column<long>(nullable: false)
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
                     ArticleId = table.Column<long>(nullable: false),
                     UserId = table.Column<long>(nullable: false),
-                    Context = table.Column<string>(maxLength: 100, nullable: false)
+                    Context = table.Column<string>(maxLength: 500, nullable: false),
+                    CommentTime = table.Column<DateTime>(nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_commment", x => x.Id);
+                    table.PrimaryKey("PK_comment", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -67,6 +71,22 @@ namespace PhotoCommunity.Repository.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_photo", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "replycomment",
+                columns: table => new
+                {
+                    Id = table.Column<long>(nullable: false)
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                    CommentId = table.Column<long>(nullable: false),
+                    ReplyContext = table.Column<string>(maxLength: 500, nullable: true),
+                    UserId = table.Column<long>(nullable: false),
+                    CreateTime = table.Column<DateTime>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_replycomment", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -89,7 +109,9 @@ namespace PhotoCommunity.Repository.Migrations
                     Id = table.Column<long>(nullable: false)
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
                     UserName = table.Column<string>(maxLength: 100, nullable: false),
-                    Password = table.Column<string>(maxLength: 100, nullable: false)
+                    Password = table.Column<string>(maxLength: 100, nullable: false),
+                    Telephone = table.Column<string>(maxLength: 20, nullable: false),
+                    UserContext = table.Column<string>(maxLength: 500, nullable: true)
                 },
                 constraints: table =>
                 {
@@ -106,10 +128,13 @@ namespace PhotoCommunity.Repository.Migrations
                 name: "class");
 
             migrationBuilder.DropTable(
-                name: "commment");
+                name: "comment");
 
             migrationBuilder.DropTable(
                 name: "photo");
+
+            migrationBuilder.DropTable(
+                name: "replycomment");
 
             migrationBuilder.DropTable(
                 name: "tag");

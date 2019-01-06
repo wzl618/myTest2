@@ -111,6 +111,11 @@ namespace PhotoCommunity.Web
                 app.UseExceptionHandler("/Home/Error");
             }
 
+            DefaultFilesOptions defaultFilesOptions = new DefaultFilesOptions();
+            defaultFilesOptions.DefaultFileNames.Clear();
+            defaultFilesOptions.DefaultFileNames.Add("/index.html");
+            app.UseDefaultFiles(defaultFilesOptions);
+
             app.UseStaticFiles();
             app.UseCookiePolicy();
             app.UseSession();
@@ -127,12 +132,13 @@ namespace PhotoCommunity.Web
                 }
             });
 
-            app.UseMvc(routes =>
-            {
-                routes.MapRoute(
-                    name: "default",
-                    template: "{controller=Home}/{action=Index}/{id?}");
-            });
+            //app.UseMvc(routes =>
+            //{
+            //    routes.MapRoute(
+            //        name: "default",
+            //        template: "{controller=Home}/{action=Index}/{id?}");
+            //});
+           app.UseMvc();
 
             //swagger
 #if DEBUG

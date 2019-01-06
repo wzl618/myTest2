@@ -70,6 +70,19 @@ namespace PhotoCommunity.Service
         /// <returns></returns>
         bool UpdateArticleCommentCount(long articleId);
 
+        /// <summary>
+        /// 根据标签Id获取文章信息
+        /// </summary>
+        /// <param name="tagId"></param>
+        /// <returns></returns>
+        List<ArticleModel> GetArticleByTagId(int pageSize, int pageIndex, long tagId);
+
+        /// <summary>
+        /// 根据标签获取文章数量
+        /// </summary>
+        /// <param name="tagId"></param>
+        /// <returns></returns>
+        int GetArticleCountByTagId(long tagId);
 
     }
 }

@@ -148,5 +148,32 @@ namespace PhotoCommunity.Service.Impl
             }
         }
 
+        /// <summary>
+        /// 根据标签Id获取文章信息
+        /// </summary>
+        /// <param name="tagId"></param>
+        /// <returns></returns>
+        public List<ArticleModel> GetArticleByTagId(int pageSize, int pageIndex, long tagId) {
+            var model = new ArticleAndIndexModel();
+            var article = _articleRepository.GetArticleByTagId(pageSize, pageIndex, tagId);
+            if (article != null)
+            {
+                return AutoMapper.Mapper.Map<List<ArticleModel>>(article);
+            }
+            else
+            {
+                return null;
+            }
+        }
+
+        /// <summary>
+        /// 根据标签获取文章数量
+        /// </summary>
+        /// <param name="tagId"></param>
+        /// <returns></returns>
+        public int GetArticleCountByTagId(long tagId) {
+            return _articleRepository.GetArticleCountByTagId(tagId);
+        }
+
     }
 }

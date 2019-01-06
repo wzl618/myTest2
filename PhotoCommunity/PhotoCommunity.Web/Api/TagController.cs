@@ -71,5 +71,16 @@ namespace PhotoCommunity.Web.Api
         {
             return AutoMapper.Mapper.Map<List<TagResponse>>(_tagService.GetTagList()) ;
         }
+
+        /// <summary>
+        /// 根据标签Id获取标签
+        /// </summary>
+        /// <param name="tagId"></param>
+        /// <returns></returns>
+        [Route("GetTagById")]
+        [HttpGet]
+        public TagResponse GetTagById(long tagId) {
+            return AutoMapper.Mapper.Map<TagResponse>(_tagService.GetTag(tagId));
+        }
     }
 }

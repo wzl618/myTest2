@@ -56,5 +56,21 @@ namespace PhotoCommunity.Repository.ArticleDomain.Repository
         /// <returns></returns>
         int GetArticleCountByClassId(long classId);
 
+        /// <summary>
+        /// 根据标签Id获取文章信息
+        /// </summary>
+        /// <param name="pageSize"></param>
+        /// <param name="pageIndex"></param>
+        /// <param name="tagId"></param>
+        /// <returns></returns>
+        List<Article> GetArticleByTagId(int pageSize, int pageIndex, long tagId);
+
+        /// <summary>
+        /// 根据标签Id获取文章数量
+        /// </summary>
+        /// <param name="tagId"></param>
+        /// <returns></returns>
+        int GetArticleCountByTagId(long tagId);
+
     }
 }

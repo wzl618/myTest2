@@ -15,5 +15,9 @@ namespace PhotoCommunity.Repository.Entity
         public string UserName { get; set; }
         [Required,MaxLength(100)]
         public string Password { get; set; }
+        [Required,MaxLength(20)]
+        public string Telephone { get; set; }
+        [MaxLength(500)]
+        public string UserContext { get; set; }
     }
 }

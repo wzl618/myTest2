@@ -17,6 +17,7 @@ namespace PhotoCommunity.Repository.Entity
         /// <summary>
         /// 大类名称
         /// </summary>
+        [Required,MaxLength(100)]
         public string ClassName { get; set; }
     }
 }

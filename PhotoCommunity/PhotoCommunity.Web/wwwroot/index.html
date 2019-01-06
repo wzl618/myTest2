@@ -166,41 +166,6 @@
             }
         });
 
-        var login = new Vue({
-            el: '#login',
-            data: {
-                userName: '',
-                showLogin: true,
-                showUserName: false,
-                showRegister: true
-            },
-            methods: {
-                getUserName: function () {
-                    this.$http.get('/api/user/GetUserName')
-                        .then(
-                        function (res) {
-                            if (res.body == "false") {
-                                this.$data.userName = "登录";
-                                this.$data.showLogin = true;
-                                this.$data.showUserName = false;
-
-                            }
-                            else {
-                                this.$data.userName = res.body;
-                                this.$data.showLogin = false;
-                                this.$data.showUserName = true;
-                                this.$data.showRegister = false;
-                            }    
-                            },
-                            function () {
-                                this.$data.userName = "登录";
-                                this.$data.showLogin = true;
-                                this.$data.showUserName = false;
-                            });
-                }               
-            }
-        });
-
         var article1 = new Vue({
             el: '#article1',
             data: {
@@ -248,10 +213,66 @@
                 }
             }
         });
+
+        var login = new Vue({
+            el: '#header',
+            data: {
+                userName: '',
+                showLogin: true,
+                showUserName: false,
+                showRegister: true,
+                allTags: [],
+                activeTag:0
+            },
+            methods: {
+                getUserName: function () {
+                    this.$http.get('/api/user/GetUserName')
+                        .then(
+                            function (res) {
+                                if (res.body == "false") {
+                                    this.$data.userName = "登录";
+                                    this.$data.showLogin = true;
+                                    this.$data.showUserName = false;
+
+                                }
+                                else {
+                                    this.$data.userName = res.body;
+                                    this.$data.showLogin = false;
+                                    this.$data.showUserName = true;
+                                    this.$data.showRegister = false;
+                                }
+                            },
+                            function () {
+                                this.$data.userName = "登录";
+                                this.$data.showLogin = true;
+                                this.$data.showUserName = false;
+                            });
+                },
+                //获取所有标签
+                getAllTags: function () {
+                    this.$http.get('api/tag/GetAllTag')
+                        .then(
+                        function (res) {
+                            this.$data.allTags = res.body;
+                        },
+                        function () {
+                            alert("请求获取失败");
+                        }
+                        );
+                },
+
+                //将TagId赋值实现点击按钮设置当前页
+                getTagId: function (id) {
+                    this.$data.activeTag = id;
+                }
+
+            }
+        });
         article1.getArticleList();
         article2.getArticleList();
         app.getArticleCount();
         login.getUserName();
+        login.getAllTags();
     };
 </script>
 
@@ -273,13 +294,12 @@
                             </div>
                         </div>
                         
-                        <div class="fr" id="login">
+                        <div class="fr">
                         	<div class="block_top_menu">
                             	<ul>
-                                	<li class="current" v-if="showLogin"><a href="login.html">登录</a></li>
+                                	<li class="current" v-if="showLogin"><a href="demo.html">登录&注册</a></li>
                                     <li class="current" v-if="showUserName"><a href="#">{{userName}}</a></li>
-                                    <li v-if="showUserName"><a href="login.html">切换账号</a></li>
-                                    <li v-if="showRegister"><a href="registration.html">注册</a></li>
+                                    <li v-if="showUserName"><a href="demo.html">切换账号</a></li>
                                 </ul>
                             </div>
                         </div>
@@ -290,7 +310,7 @@
                 
             	<section class="bottom">
                 	<div class="inner">
-                    	<div id="logo_top"><a href="index.html"><img src="images/logo_top.png" alt="BusinessNews" title="Photo" /></a></div>
+                    	<div id="logo_top"><h3>PhotoCommunity<br>摄影图片分享交流网站<br>连接摄影爱好者的桥梁</h3></div>
                         
                         <div class="block_today_date">
                         	<div class="num"><p id="num_top" /></div>
@@ -320,18 +340,13 @@
                 </section>
                 
                 <section class="section_main_menu">
-                	<div class="inner">
+                	<div class="inner" >
                     	<nav class="main_menu">
                         	<ul>
 								<li class="current_page_item"><a href="index.html">主页</a>
-                                	
-                                    <ul>
-                                    	<li><a href="index.html">主页内容</a></li>
-                                    </ul>
                                 </li>
-							  	<li class="big_dropdown" data-content="business"><a href="business.html">Business</a></li>
-							  	<li class="big_dropdown" data-content="technology"><a href="technology.html">Technology</a></li>
-							  	<li class="big_dropdown" data-content="education"><a href="education.html">Education</a></li>
+                                
+							  	<li v-for="tag in allTags" v-bind:class="activeTag == tag.id?'current_page_item':'big_dropdown'" data-content="business" v-on:click="getTagId(tag.id)" ><a :href="'content.html#'+tag.id">{{tag.tagName}}</a></li>
 							  	<li><a href="media.html">Media</a>
                                 	
                                     <ul>
@@ -356,116 +371,7 @@
                     </div>
                 </section>
                 
-                <section class="section_big_dropdown">
-                	<div class="inner">
-                    	<div class="block_big_dropdown" data-menu="business">
-                        	<div class="content">
-                            	<div class="image">
-                                	<a href="blog_post.html" class="pic"><img src="images/pic_big_drop_3.jpg" alt="" /></a>
-                                    <p><a href="blog_post.html">Embarrassing hidden in the middleany thing</a></p>
-                                </div>
-                                <div class="line"></div>
-                                
-                                <div class="image">
-                                	<a href="blog_post.html" class="pic"><img src="images/pic_big_drop_4.jpg" alt="" /></a>
-                                    <p><a href="blog_post.html">Content of a page when looking.</a></p>
-                                </div>
-                                <div class="line"></div>
-                                
-                                <div class="popular_posts">
-                                	<div class="title"><p>Popular Posts</p></div>
-                                    <ul>
-                                    	<li><a href="blog_post.html"><span>11 July, 2012</span>Established fact that a reader.</a></li>
-                                        <li><a href="blog_post_w_slider.html"><span>08 July, 2012</span>Editors now use as their default model text.</a></li>
-                                        <li><a href="blog_post_w_video.html"><span>05 July, 2012</span>Embarrassing hidden in the middle.</a></li>
-                                        <li><a href="blog_post.html"><span>01 July, 2012</span>Anything embarrassing hidden in the middl.</a></li>
-                                    </ul>
-                                </div>
-                                <div class="line"></div>
-                                
-                                <div class="more">
-                                	<div class="title"><p>More In Business</p></div>
-                                    <ul>
-                                    	<li><a href="#">Business</a></li>
-                                        <li><a href="#">Money</a></li>
-                                        <li><a href="#">Isnvestor Programs</a></li>
-                                        <li><a href="#">Banks</a></li>
-                                    </ul>
-                                </div>
-                                
-                                <div class="clearboth"></div>
-                            </div>
-                        </div>
-                        
-                        <div class="block_big_dropdown" data-menu="technology">
-                        	<div class="content">
-                            	<div class="image">
-                                	<a href="blog_post.html" class="pic"><img src="images/pic_big_drop_5.jpg" alt="" /></a>
-                                    <p><a href="blog_post.html">Simply dummy text of the printing.</a></p>
-                                </div>
-                                <div class="line"></div>
-                                
-                                <div class="image">
-                                	<a href="blog_post.html" class="pic"><img src="images/pic_big_drop_6.jpg" alt="" /></a>
-                                    <p><a href="blog_post.html">Internet tend to repeat predefined chunks.</a></p>
-                                </div>
-                                <div class="line"></div>
-                                
-                                <div class="popular_posts">
-                                	<div class="title"><p>Popular Posts</p></div>
-                                    <ul>
-                                    	<li><a href="blog_post.html"><span>11 July, 2012</span>Publishing packages and web page</a></li>
-                                        <li><a href="blog_post_w_slider.html"><span>08 July, 2012</span>Generators on the Internet tend to repeat.</a></li>
-                                        <li><a href="blog_post_w_video.html"><span>05 July, 2012</span>Anything embarrassing hidden in the middle.</a></li>
-                                        <li><a href="blog_post.html"><span>01 July, 2012</span>Words which don't look even slightly.</a></li>
-                                    </ul>
-                                </div>
-                                <div class="line"></div>
-                                
-                                <div class="clearboth"></div>
-                            </div>
-                        </div>
-                        
-                    	<div class="block_big_dropdown" data-menu="education">
-                        	<div class="content">
-                            	<div class="image">
-                                	<a href="blog_post.html" class="pic"><img src="images/pic_big_drop_1.jpg" alt="" /></a>
-                                    <p><a href="blog_post.html">Many desktop packages and web page editors.</a></p>
-                                </div>
-                                <div class="line"></div>
-                                
-                                <div class="image">
-                                	<a href="blog_post.html" class="pic"><img src="images/pic_big_drop_2.jpg" alt="" /></a>
-                                    <p><a href="blog_post.html">There are many variations passages</a></p>
-                                </div>
-                                <div class="line"></div>
-                                
-                                <div class="popular_posts">
-                                	<div class="title"><p>Popular Posts</p></div>
-                                    <ul>
-                                    	<li><a href="blog_post.html"><span>11 July, 2012</span>Many desktop publishing packages and web page</a></li>
-                                        <li><a href="blog_post_w_slider.html"><span>08 July, 2012</span>Randomised words which don't look even.</a></li>
-                                        <li><a href="blog_post_w_video.html"><span>05 July, 2012</span>Anything embarrassing hidden in the middle.</a></li>
-                                        <li><a href="blog_post.html"><span>01 July, 2012</span>Established fact that a reader.</a></li>
-                                    </ul>
-                                </div>
-                                <div class="line"></div>
-                                
-                                <div class="more">
-                                	<div class="title"><p>More In Education</p></div>
-                                    <ul>
-                                    	<li><a href="#">High school</a></li>
-                                        <li><a href="#">Univercity</a></li>
-                                        <li><a href="#">College</a></li>
-                                        <li><a href="#">Students</a></li>
-                                    </ul>
-                                </div>
-                                
-                                <div class="clearboth"></div>
-                            </div>
-                        </div>
-                    </div>
-              	</section>
+
                 
                 <section class="section_secondary_menu">
                 	<div class="inner">                        
@@ -755,135 +661,135 @@
                     </div>
                     
                     <div class="sidebar">
-                        
-                      <div class="separator" style="height:31px;"></div>
-                        
+
+                        <div class="separator" style="height:31px;"></div>
+
                         <div class="block_popular_posts">
-                        	<h4>热门看点</h4>
-                            
-                        	<div class="article">
-								<div class="pic">
-									<a href="#" class="w_hover">
-										<img src="images/pic_popular_post_1.jpg" alt="" />
-										<span></span>
-									</a>
-								</div>
-                                        
-								<div class="text">
-									<p class="title"><a href="#">看点1</a></p>
-									<div class="date"><p>2018/12/19</p></div>
+                            <h4>热门看点</h4>
+
+                            <div class="article">
+                                <div class="pic">
+                                    <a href="#" class="w_hover">
+                                        <img src="images/pic_popular_post_1.jpg" alt="" />
+                                        <span></span>
+                                    </a>
+                                </div>
+
+                                <div class="text">
+                                    <p class="title"><a href="#">看点1</a></p>
+                                    <div class="date"><p>2018/12/19</p></div>
                                     <div class="icons">
-                                    	<ul>
-                                        	<li><a href="#" class="views">41</a></li>
+                                        <ul>
+                                            <li><a href="#" class="views">41</a></li>
                                             <li><a href="#" class="comments">22</a></li>
                                         </ul>
                                     </div>
-								</div>
-							</div>
-							<div class="line_3"></div>
-                            
+                                </div>
+                            </div>
+                            <div class="line_3"></div>
+
                             <div class="article">
-								<div class="pic">
-									<a href="#" class="w_hover">
-										<img src="images/pic_popular_post_2.jpg" alt="" />
-										<span></span>
-									</a>
-								</div>
-                                        
-								<div class="text">
-									<p class="title"><a href="#">看点2</a></p>
-									<div class="date"><p>2018/12/19</p></div>
+                                <div class="pic">
+                                    <a href="#" class="w_hover">
+                                        <img src="images/pic_popular_post_2.jpg" alt="" />
+                                        <span></span>
+                                    </a>
+                                </div>
+
+                                <div class="text">
+                                    <p class="title"><a href="#">看点2</a></p>
+                                    <div class="date"><p>2018/12/19</p></div>
                                     <div class="icons">
-                                    	<ul>
-                                        	<li><a href="#" class="views">24</a></li>
+                                        <ul>
+                                            <li><a href="#" class="views">24</a></li>
                                             <li><a href="#" class="comments">16</a></li>
                                         </ul>
                                     </div>
-								</div>
-							</div>
-							<div class="line_3"></div>
-                            
+                                </div>
+                            </div>
+                            <div class="line_3"></div>
+
                             <div class="article">
-								<div class="pic">
-									<a href="#" class="w_hover">
-										<img src="images/pic_popular_post_3.jpg" alt="" />
-										<span></span>
-									</a>
-								</div>
-                                        
-								<div class="text">
-									<p class="title"><a href="#">看点3</a></p>
-									<div class="date"><p>2018/12/30</p></div>
+                                <div class="pic">
+                                    <a href="#" class="w_hover">
+                                        <img src="images/pic_popular_post_3.jpg" alt="" />
+                                        <span></span>
+                                    </a>
+                                </div>
+
+                                <div class="text">
+                                    <p class="title"><a href="#">看点3</a></p>
+                                    <div class="date"><p>2018/12/30</p></div>
                                     <div class="icons">
-                                    	<ul>
-                                        	<li><a href="#" class="views">33</a></li>
+                                        <ul>
+                                            <li><a href="#" class="views">33</a></li>
                                             <li><a href="#" class="comments">25</a></li>
                                         </ul>
                                     </div>
-								</div>
-							</div>
-							<div class="line_2"></div>
-                        </div>
-                        
-                        <div class="separator" style="height:31px;"></div>
-                        
-                        <div class="separator" style="height:31px;"></div>
-                        
-                        <div class="block_calendar">
-                        	<h4>Calendar</h4>
-                            
-                            <div class="calendar" id="calendar_sidebar">
+                                </div>
                             </div>
-                            
-                            <script type="text/javascript">
-								var today = new Date();
-								var date = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate();
-								$('#calendar_sidebar').DatePicker({
-									flat : true,
-									date : date,
-									calendars : 1,
-									starts : 1,
-									locale : {
-										days : ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'],
-										daysShort : ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
-										daysMin : ['S', 'M', 'T', 'W', 'T', 'F', 'S', 'S'],
-										months : ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
-										monthsShort : ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
-										weekMin : 'wk'
-									}
-								});
-							</script>
-                            
                             <div class="line_2"></div>
                         </div>
-                        
+
                         <div class="separator" style="height:31px;"></div>
-                        
+
                         <div class="separator" style="height:31px;"></div>
-                        
+
+                        <div class="block_calendar">
+                            <h4>日历</h4>
+
+                            <div class="calendar" id="calendar_sidebar">
+                            </div>
+
+                            <script type="text/javascript">
+                                var today = new Date();
+                                var date = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate();
+                                $('#calendar_sidebar').DatePicker({
+                                    flat: true,
+                                    date: date,
+                                    calendars: 1,
+                                    starts: 1,
+                                    locale: {
+                                        days: ['周日', '周一', '周二', '周三', '周四', '周五', '周六', '周日'],
+                                        daysShort: ['周日', '周一', '周二', '周三', '周四', '周五', '周六', '周日'],
+                                        daysMin: ['周日', '周一', '周二', '周三', '周四', '周五', '周六', '周日'],
+                                        months: ['一月', '二月', '三月', '四月', '五月', '六月', '七月', '八月', '九月', '十月', '十一月', '十二月'],
+                                        monthsShort: ['一月', '二月', '三月', '四月', '五月', '六月', '七月', '八月', '九月', '十月', '十一月', '十二月'],
+                                        weekMin: 'wk'
+                                    }
+                                });
+                            </script>
+
+                            <div class="line_2"></div>
+                        </div>
+
+                        <div class="separator" style="height:31px;"></div>
+
+                        <div class="separator" style="height:31px;"></div>
+
                         <div class="block_popular_stuff">
-                        	<h4>Popular Photo</h4>
-                            
+                            <h4>Popular Photo</h4>
+
                             <div class="content">
-                            	<div class="media"><a href="images/pic_pop_photo_big.jpg" class="general_pic_hover zoom no_fx" data-rel="prettyPhoto" title="Popular Photo"><img src="images/pic_pop_photo.jpg" alt="" /></a></div>
+                                <div class="media"><a href="images/pic_pop_photo_big.jpg" class="general_pic_hover zoom no_fx" data-rel="prettyPhoto" title="Popular Photo"><img src="images/pic_pop_photo.jpg" alt="" /></a></div>
                                 <p><a href="blog_post_w_slider.html">Editors their default model text, and a search for will uncover many.</a> <img src="images/icon_photo.gif" alt="" /></p>
                                 <p class="date">11 July, 2012</p>
                             </div>
-                            
+
                             <div class="info">
-                            	<ul>
-                                	<li class="comments"><a href="#">100</a></li>
+                                <ul>
+                                    <li class="comments"><a href="#">100</a></li>
                                     <li class="views"><a href="#">134</a></li>
                                 </ul>
                             </div>
-                            
+
                             <div class="clearboth"></div>
-                            
+
                             <div class="line_2"></div>
                         </div>
-                        
-                      	<div class="separator" style="height:31px;"></div>
-                        
+
+                        <div class="separator" style="height:31px;"></div>
+
                     </div>
                     
                 	<div class="clearboth"></div>
@@ -894,50 +800,6 @@
         
         
     </div>
-    
-    <!-- POPUP BEGIN -->
-    <div id="overlay"></div>
-    <div id="login" class="block_popup">
-    	<div class="popup">
-        	<a href="/photoCommunity/index.html" class="close">Close</a>
-            
-            <div class="content">
-            	<div class="title"><p>登录 </p></div>
-                
-                <div class="form">
-                	<form action="#" />
-                    	<div class="column">
-                        	<p class="label">用户名</p>
-                            <div class="field" ><input type="text" v-model="userName"/></div>
-                        </div>
-                        
-                        <div class="column">
-                        	<p class="label">密码</p>
-                            <div class="field" ><input type="password" v-model="password"/></div>
-                        </div>
-						
-						<div class="column_2">
-                            <div class="remember">
-                            	<div class="checkbox"><input type="checkbox" /></div>
-                                <div class="remember_label"><p>记住密码</p></div>
-                            </div>
-                        </div>
-                        
-                        <div class="column_2">
-                            <p class="forgot_pass"><a href="#">忘记密码</a></p>
-                        </div>
-                        
-                        <div class="column button">
-                            <a href="#" class="enter" v-on:click="login"><span>登录</span></a>
-                        </div>
-                        
-                        <div class="clearboth"></div>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- POPUP END -->
 </body>
 
 </html>

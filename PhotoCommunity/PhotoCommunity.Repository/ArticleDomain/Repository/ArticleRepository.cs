@@ -111,5 +111,28 @@ namespace PhotoCommunity.Repository.ArticleDomain.Repository
         public int GetArticleCountByClassId(long classId) {
             return _myDbContext.ArticleRepository.Where(x => x.ClassId == classId).Count();
         }
+
+        /// <summary>
+        /// 根据标签Id获取文章信息
+        /// </summary>
+        /// <param name="pageSize"></param>
+        /// <param name="pageIndex"></param>
+        /// <param name="tagId"></param>
+        /// <returns></returns>
+        public List<Article> GetArticleByTagId(int pageSize, int pageIndex, long tagId) {
+            return _myDbContext.ArticleRepository.Where(x => x.TagId == tagId && x.IsDelete == false)
+               .OrderByDescending(x => x.Id)
+               .Skip(pageSize * (pageIndex - 1))
+               .Take(pageSize).ToList();
+        }
+
+        /// <summary>
+        /// 根据标签Id获取文章数量
+        /// </summary>
+        /// <param name="tagId"></param>
+        /// <returns></returns>
+        public int GetArticleCountByTagId(long tagId) {
+            return _myDbContext.ArticleRepository.Where(x => x.TagId == tagId).Count();
+        }
     }
 }

@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset="utf-8" />
-    <title></title> 
+    <title></title>
     <style type="text/css">
         [v-cloak] {
             display: none;
@@ -10,33 +10,34 @@
     </style>
 </head>
 <body>
-    <div class="row">
-        <div class="col-md-6">
-            <script id="container" name="container" type="text/plain">
-                【请输入标题】
-            </script>
-        </div>
-        <div class="col-md-6">
-        </div>
-    </div>
     <div id="app">
+        <div class="row">
+            <div class="col-md-6">
+                <script id="container" name="container" type="text/plain">
+                    
+                </script>
+            </div>
+            <div class="col-md-6">
+            </div>
+        </div>
         <div class="row">
             <div class="col-md-4">
                 <label>请选择大类名称</label>
-                <select  class="classList"  v-model="classId">
+                <select class="classList" v-model="classId">
                     <option v-for="list in classList" v-bind:value="list.id">{{list.className}}</option>
                 </select>
             </div>
             <div class="col-md-4">
                 <label>请选择标签名称</label>
-                <select class="tagList"  v-model="tagId">
+                <select class="tagList" v-model="tagId">
                     <option v-for="tag in tagList" v-bind:value="tag.id">{{tag.tagName}}</option>
                 </select>
             </div>
             <div class="col-md-4">
-                <button v-on:click=" post">上传</button>
+                <button v-on:click=" post">编辑</button>
+                <button v-on:click="back">返回首页</button>
             </div>
-        </div>           
+        </div>
     </div>
     <script src="../lib/ueditor/ueditor.config.js"></script>
     <script src="../lib/ueditor/ueditor.all.min.js"></script>
@@ -58,27 +59,29 @@
                     classList: [],
                     classId: 0,
                     tagId: 0,
+                    articleId: 0,
                 },
                 methods: {
                     post: function () {
                         app.textContent = UE.getEditor('container').getContentTxt(),
                             app.Context = UE.getEditor('container').getContent(),
-                            this.$http.post('/api/article/SaveImageNameAndText', {
+                            this.$http.post('/api/article/UpdateImageNameAndText', {
                             "source": this.$data.Context,
                             "textContent": this.$data.textContent,
                             "classId": this.classId,
-                            "tagId": this.tagId
+                            "tagId": this.tagId,
+                            "articleId": location.hash.replace('#', '')
                             })
                                 .then(
                                     function (res) {
-                                        alert('上传成功');
+                                        alert('编辑成功');
                                     },
                                     function () {
-                                        alert('上传失败');   //失败处理
+                                        alert('编辑失败');   //失败处理
                                     });
                     },
 
-                      //发送获取标签请求请求
+                    //发送获取标签请求请求
                     getAllTag: function () {
                         this.$http.get("/api/tag/GetAllTag", {})
                             .then(
@@ -97,20 +100,41 @@
                     getAllClass: function () {
                         this.$http.get("/api/class/GetAllclass", {})
                             .then(
-                            function (res) {
-                                this.$data.classList = res.body;
-                                this.classId = this.$data.classList[0].id;
-                                console.log(this.$data.classList[0].id);
+                                function (res) {
+                                    this.$data.classList = res.body;
+                                    this.classId = this.$data.classList[0].id;
+                                    console.log(this.$data.classList[0].id);
                                 },
                                 function () {
                                     alert("请求发送失败");
                                 }
                             );
+                    },
+
+                    //发送获取文章
+                    getArticle: function () {
+                        this.$http.get("/api/article/GetArticle?articleId=" + location.hash.replace('#', ''))
+                            .then(
+                            function (res) {
+                                UE.getEditor('container').setContent(res.body.context);
+                                this.classId = res.body.classId;
+                                this.tagId = res.body.tagId;
+                                },
+                            function () {
+                                alert("请求发送失败");
+                            }
+                            );
+                    },
+
+                    //返回首页
+                    back: function () {
+                        window.location.href = "/index.html";
                     }
-                }
+                }              
             });
             app.getAllTag();
             app.getAllClass();
+            app.getArticle();
         }
     </script>
 </body>

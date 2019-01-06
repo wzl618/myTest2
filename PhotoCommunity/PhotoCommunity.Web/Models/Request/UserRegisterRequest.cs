@@ -18,5 +18,13 @@ namespace PhotoCommunity.Web.Models.Request
         /// 密码
         /// </summary>
         public string Password { get; set; }
+        /// <summary>
+        /// 手机号码
+        /// </summary>
+        public string Telephone { get; set; }
+        /// <summary>
+        /// 用户简介
+        /// </summary>
+        public string UserContext { get; set; }
     }
 }

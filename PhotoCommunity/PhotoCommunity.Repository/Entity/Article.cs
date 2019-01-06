@@ -29,12 +29,12 @@ namespace PhotoCommunity.Repository.Entity
         /// <summary>
         /// 文章标题
         /// </summary>
-        [Required,MaxLength(100)]
+        [Required, MaxLength(100)]
         public string ArticleTitle { get; set; }
         /// <summary>
         /// 文章内容
         /// </summary>
-        [Required,MaxLength(1000)]
+        [Required]
         public string ArticleContext { get; set; }
         /// <summary>
         /// 是否删除
@@ -61,6 +61,7 @@ namespace PhotoCommunity.Repository.Entity
         /// <summary>
         /// 全部内容
         /// </summary>
+        [Required]
         public string Context { get; set; }
     }
 }

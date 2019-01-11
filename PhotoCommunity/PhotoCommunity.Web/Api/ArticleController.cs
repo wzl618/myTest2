@@ -90,8 +90,8 @@ namespace PhotoCommunity.Web.Api
                 CreateTime = DateTime.Now.Date,
                 UserName = username,
                 ViewCount = 0,
-                CommmentCount=0,
-                Context=request.Source
+                CommmentCount = 0,
+                Context = request.Source
             };
 
             var articleId = _articleService.AddArticle(AutoMapper.Mapper.Map<ArticleModel>(article));
@@ -100,7 +100,7 @@ namespace PhotoCommunity.Web.Api
 
             Regex re = new Regex(strRegExPattern, RegexOptions.IgnoreCase);
             Match m = re.Match(request.Source);
-            
+
             while (m.Success)
             {
                 srcArr.Add(m.Groups[2].Value);
@@ -146,7 +146,7 @@ namespace PhotoCommunity.Web.Api
             var txt = request.TextContent.Trim();
             int start = txt.IndexOf('【');
             int end = txt.IndexOf('】');
-            var title = txt.Substring(start,end+1);
+            var title = txt.Substring(start, end + 1);
             string[] strs = txt.Split(title);
             var context = strs[1].Trim();
             if (context == null)
@@ -157,7 +157,7 @@ namespace PhotoCommunity.Web.Api
             //初始化Article
             var article = new UpdateArticleRequest()
             {
-                Id=request.ArticleId,
+                Id = request.ArticleId,
                 ClassId = request.ClassId,
                 TagId = request.TagId,
                 ArticleTitle = title,
@@ -204,8 +204,8 @@ namespace PhotoCommunity.Web.Api
                 _photoService.AddPhoto(AutoMapper.Mapper.Map<PhotoModel>(photo));
             }
 
-           
-            
+
+
 
 
             return true;
@@ -233,14 +233,14 @@ namespace PhotoCommunity.Web.Api
 
             var article = _articleService.GetArticleById(articleId);
             article.CreateTime = article.CreateTime.Date;
-            if (article==null) {
+            if (article == null) {
                 return new GetArticleResponse();
             }
-            var getArticleResponse=AutoMapper.Mapper.Map<GetArticleResponse>(article);            
+            var getArticleResponse = AutoMapper.Mapper.Map<GetArticleResponse>(article);
             var photos = _photoService.GetPhotosByArticleId(articleId);
-            if (photos!=null) {
+            if (photos != null) {
                 getArticleResponse.Photos = AutoMapper.Mapper.Map<List<PhotoResponse>>(photos);
-            }           
+            }
             getArticleResponse.ClassName = _classService.GetClassById(getArticleResponse.ClassId).ClassName;
             getArticleResponse.TagName = _tagService.GetTag(getArticleResponse.TagId).TagName;
             getArticleResponse.CreateTimeStr = Convert.ToDateTime(getArticleResponse.CreateTime).ToString("yyyy-MM-dd");
@@ -256,7 +256,7 @@ namespace PhotoCommunity.Web.Api
         [HttpPost]
         public bool DeleteArticle([FromBody]long articleId) {
 
-            var result= _articleService.DeleteArticle(articleId);
+            var result = _articleService.DeleteArticle(articleId);
             return result;
         }
 
@@ -267,9 +267,9 @@ namespace PhotoCommunity.Web.Api
         /// <returns></returns>
         [Route("SearchArticleByArticleTitle")]
         [HttpGet]
-        public List<GetArticleResponse>  SearchArticleByArticleTitle(string articleTitle) {
+        public List<GetArticleResponse> SearchArticleByArticleTitle(string articleTitle) {
             var articleList = _articleService.GetArticleByArticleTitle(articleTitle);
-            if (articleList == null&& articleList.Count==0)
+            if (articleList == null && articleList.Count == 0)
             {
                 return new List<GetArticleResponse>();
             }
@@ -279,12 +279,12 @@ namespace PhotoCommunity.Web.Api
                 var photos = _photoService.GetPhotosByArticleId(article.Id);
                 if (photos != null)
                 {
-                    getArticleResponse.Where(x=>x.Id==article.Id).FirstOrDefault().Photos = AutoMapper.Mapper.Map<List<PhotoResponse>>(photos);
+                    getArticleResponse.Where(x => x.Id == article.Id).FirstOrDefault().Photos = AutoMapper.Mapper.Map<List<PhotoResponse>>(photos);
                 }
                 getArticleResponse.Where(x => x.Id == article.Id).FirstOrDefault().ClassName = _classService.GetClassById(article.ClassId).ClassName;
                 getArticleResponse.Where(x => x.Id == article.Id).FirstOrDefault().TagName = _tagService.GetTag(article.TagId).TagName;
                 getArticleResponse.Where(x => x.Id == article.Id).FirstOrDefault().CreateTimeStr = Convert.ToDateTime(article.CreateTime).ToString("yyyy-MM-dd");
-            }          
+            }
             return getArticleResponse;
         }
 
@@ -298,8 +298,8 @@ namespace PhotoCommunity.Web.Api
         [Route("GetArtilceByClassId")]
         [HttpGet]
         public List<GetArticleResponse> GetArtilceByClassId(int pageSize, int pageIndex, long classId) {
-            var articleList = _articleService.GetArticleByClassId(pageSize, pageIndex,classId);
-            
+            var articleList = _articleService.GetArticleByClassId(pageSize, pageIndex, classId);
+
             if (articleList == null && articleList.Count == 0)
             {
                 return new List<GetArticleResponse>();
@@ -307,7 +307,7 @@ namespace PhotoCommunity.Web.Api
             var getArticleResponse = AutoMapper.Mapper.Map<List<GetArticleResponse>>(articleList);
             foreach (var article in articleList)
             {
-                
+
                 var photos = _photoService.GetPhotosByArticleId(article.Id);
                 if (photos != null)
                 {
@@ -316,7 +316,7 @@ namespace PhotoCommunity.Web.Api
                 getArticleResponse.Where(x => x.Id == article.Id).FirstOrDefault().ClassName = _classService.GetClassById(article.ClassId).ClassName;
                 getArticleResponse.Where(x => x.Id == article.Id).FirstOrDefault().TagName = _tagService.GetTag(article.TagId).TagName;
                 getArticleResponse.Where(x => x.Id == article.Id).FirstOrDefault().CreateTimeStr = Convert.ToDateTime(article.CreateTime).ToString("yyyy-MM-dd");
-                
+
             }
             return getArticleResponse;
         }
@@ -340,7 +340,7 @@ namespace PhotoCommunity.Web.Api
         [Route("UpdateArticleViewCount")]
         [HttpPost]
         public bool UpdateArticleViewCount([FromBody]long articleId) {
-           return  _articleService.UpdateArticleViewCount(articleId);
+            return _articleService.UpdateArticleViewCount(articleId);
         }
 
 
@@ -388,6 +388,37 @@ namespace PhotoCommunity.Web.Api
         public int GetArticleCountByTagId(long tagId)
         {
             return _articleService.GetArticleCountByTagId(tagId);
+        }
+
+        /// <summary>
+        /// 获取最受欢迎的文章
+        /// </summary>
+        /// <param name="count"></param>
+        /// <returns></returns>
+        [Route("GetMostPopularArticle")]
+        [HttpGet]
+        public List<GetArticleResponse> GetMostPopularArticle(int count) {
+            var articleList = _articleService.GetMostPopularArticel(count);
+
+            if (articleList == null && articleList.Count == 0)
+            {
+                return new List<GetArticleResponse>();
+            }
+            var getArticleResponse = AutoMapper.Mapper.Map<List<GetArticleResponse>>(articleList);
+            foreach (var article in articleList)
+            {
+
+                var photos = _photoService.GetPhotosByArticleId(article.Id);
+                if (photos != null)
+                {
+                    getArticleResponse.Where(x => x.Id == article.Id).FirstOrDefault().Photos = AutoMapper.Mapper.Map<List<PhotoResponse>>(photos);
+                }
+                getArticleResponse.Where(x => x.Id == article.Id).FirstOrDefault().ClassName = _classService.GetClassById(article.ClassId).ClassName;
+                getArticleResponse.Where(x => x.Id == article.Id).FirstOrDefault().TagName = _tagService.GetTag(article.TagId).TagName;
+                getArticleResponse.Where(x => x.Id == article.Id).FirstOrDefault().CreateTimeStr = Convert.ToDateTime(article.CreateTime).ToString("yyyy-MM-dd");
+
+            }
+            return getArticleResponse;
         }
     }
 }

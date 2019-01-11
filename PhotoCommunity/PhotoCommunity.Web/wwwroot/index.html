@@ -2,7 +2,7 @@
 <html>
 
 <head>
-<title>BusinessNews</title>
+<title>首页</title>
 
 <meta name="keywords" content="" />
 <meta name="description" content="" />
@@ -148,7 +148,7 @@
                         function (res) {
                             var list = new Array();
                             var i = res.body / this.$data.pageSize;
-                            if (i % this.$data.pageSize > 0) {
+                            if (res.body % this.$data.pageSize > 0) {
                                 i = i + 1;
                             }
                             for (var j=1; j <= i; j++) {
@@ -268,11 +268,59 @@
 
             }
         });
+        //热门看点
+        var popular = new Vue({
+            el: '#popular',
+            data: {
+                count: 4,
+                popularArticle: []
+            },
+            methods: {
+                getPopularArticle: function () {
+                    this.$http.get('api/article/GetMostPopularArticle?count=' + this.$data.count)
+                        .then(
+                        function (res) {
+                            this.$data.popularArticle = res.body;
+                            },
+                        function () {
+                            alert("请求获取失败");
+                        }
+                        );
+                }
+            }
+        });
+
+        //分享达人
+        var popularUser = new Vue({
+            el: '#popularUser',
+            data: {
+                count: 3,
+                popularUser: []
+            },
+            methods: {
+                getPopularUser: function () {
+                    this.$http.get('api/user/GetPopularUserInfos?count=' + this.$data.count)
+                        .then(
+                            function (res) {
+                                this.$data.popularUser = res.body;
+                            },
+                            function () {
+                                alert("请求获取失败");
+                            }
+                        );
+                }
+            }
+        });
+
+        popular.getPopularArticle();
         article1.getArticleList();
         article2.getArticleList();
         app.getArticleCount();
         login.getUserName();
         login.getAllTags();
+        popularUser.getPopularUser();
+
+        
     };
 </script>
 
@@ -330,7 +378,8 @@
                                 	<div class="field"><input type="text" class="w_def_text" title="搜索文章" /></div>
                                     <input type="submit" class="button" value="Search"/>
                                     
-                                    <div class="clearboth"></div>
+                                    <div class="clearboth">
+                                    </div>
                                 </form>
                             </div>
                         </div>
@@ -342,22 +391,28 @@
                 <section class="section_main_menu">
                 	<div class="inner" >
                     	<nav class="main_menu">
-                        	<ul>
-								<li class="current_page_item"><a href="index.html">主页</a>
+                            <ul>
+                                <li class="current_page_item">
+                                    <a href="index.html">主页</a>
                                 </li>
-                                
-							  	<li v-for="tag in allTags" v-bind:class="activeTag == tag.id?'current_page_item':'big_dropdown'" data-content="business" v-on:click="getTagId(tag.id)" ><a :href="'content.html#'+tag.id">{{tag.tagName}}</a></li>
-							  	<li><a href="media.html">Media</a>
-                                	
+                                <li class="big_dropdown"><a href="user.html">用户信息</a></li>
+                                <li class="big_dropdown" v-if="showUserName"><a href="upload.html">上传作品</a></li>
+
+                                <li v-for="tag in allTags" v-bind:class="activeTag == tag.id?'current_page_item':'big_dropdown'" data-content="business" v-on:click="getTagId(tag.id)"><a :href="'content.html#'+tag.id">{{tag.tagName}}</a></li>
+
+                                <li>
+                                    <a href="media.html">Media</a>
+
                                     <ul>
-                                    	<li><a href="media.html">Media</a></li>
+                                        <li><a href="media.html">Media</a></li>
                                         <li><a href="media_item.html">Media Item Page</a></li>
                                     </ul>
                                 </li>
-							  	<li><a href="#">Pages</a>
-                                	
+                                <li>
+                                    <a href="#">Pages</a>
+
                                     <ul>
-                                    	<li><a href="about.html">About Us</a></li>
+                                        <li><a href="about.html">About Us</a></li>
                                         <li><a href="about_author.html">About Author Page</a></li>
                                         <li><a href="contact.html">Contact Us</a></li>
                                         <li><a href="registration.html">Registration Page</a></li>
@@ -366,7 +421,7 @@
                                         <li><a href="news_post_w_video.html">News Post With Video</a></li>
                                     </ul>
                                 </li>
-						  </ul>
+                            </ul>
 						</nav>
                     </div>
                 </section>
@@ -485,7 +540,7 @@
                                     </div>
                                     <div class="line_3" style="margin:14px 0px 17px;"></div>
                                 </div>
-                               
+
                             </div>
 
                         </div>
@@ -561,100 +616,43 @@
                         </div>
                         <div class="line_2" style="margin:24px 0px 35px;"></div>
 
-                        <h3 style="font-size:16px;">Best Materials</h3>
+                        <h3 style="font-size:16px;">分享达人</h3>
                         <div class="line_4" style="margin:-4px 0px 18px;"></div>
 
-                        <div class="block_best_materials">
-                            <div class="slider">
-                                <div id="best_materials_slider" class="flexslider">
-                                    <ul class="slides">
-                                        <li>
-                                            <div class="block_best_material_post">
-                                                <div class="f_pic"><a href="news_post.html" class="w_hover"><img src="images/pic_home_best_materials_1.jpg" alt="" /><span></span></a></div>
-                                                <p class="title"><a href="news_post.html">Publishing packages and web page editors their.</a></p>
-                                                <div class="info">
-                                                    <div class="date"><p>08 July, 2012</p></div>
-                                                    <div class="category"><p><a href="#">Business</a></p></div>
-                                                </div>
-                                            </div>
-                                        </li>
+                        <div id="popularUser">
+                            <div class="block_best_materials">
+                                <div class="slider">
+                                    <div id="best_materials_slider" class="flexslider">
+                                        <ul class="slides">
+                                            <li v-for="list in popularUser">
+                                                <div class="block_best_material_post" style="float:left">
+                                                    <div class="f_pic"><a :href="'userInfo.html#'+list.id" class="w_hover"><img src="images/pic_flickr_5.png" alt="" width="102" height="102" /><span></span></a></div>
+                                                    <p class="title" style="text-align:center"><a :href="'userInfo.html#'+list.id">{{list.userName}}</a></p>
 
-                                        <li>
-                                            <div class="block_best_material_post">
-                                                <div class="f_pic"><a href="news_post.html" class="w_hover"><img src="images/pic_home_best_materials_2.jpg" alt="" /><span></span></a></div>
-                                                <p class="title"><a href="news_post.html">Publishing packages and web page editors their.</a></p>
-                                                <div class="info">
-                                                    <div class="date"><p>08 July, 2012</p></div>
-                                                    <div class="category"><p><a href="#">People</a></p></div>
                                                 </div>
-                                            </div>
-                                        </li>
-
-                                        <li>
-                                            <div class="block_best_material_post">
-                                                <div class="f_pic"><a href="news_post.html" class="w_hover"><img src="images/pic_home_best_materials_3.jpg" alt="" /><span></span></a></div>
-                                                <p class="title"><a href="news_post.html">Publishing packages and web page editors their.</a></p>
-                                                <div class="info">
-                                                    <div class="date"><p>08 July, 2012</p></div>
-                                                    <div class="category"><p><a href="#">Technology</a></p></div>
-                                                </div>
-                                            </div>
-                                        </li>
-
-                                        <li>
-                                            <div class="block_best_material_post">
-                                                <div class="f_pic"><a href="news_post.html" class="w_hover"><img src="images/pic_home_best_materials_4.jpg" alt="" /><span></span></a></div>
-                                                <p class="title"><a href="news_post.html">Publishing packages and web page editors their.</a></p>
-                                                <div class="info">
-                                                    <div class="date"><p>08 July, 2012</p></div>
-                                                    <div class="category"><p><a href="#">Business</a></p></div>
-                                                </div>
-                                            </div>
-                                        </li>
-
-                                        <li>
-                                            <div class="block_best_material_post">
-                                                <div class="f_pic"><a href="news_post.html" class="w_hover"><img src="images/pic_home_best_materials_5.jpg" alt="" /><span></span></a></div>
-                                                <p class="title"><a href="news_post.html">Publishing packages and web page editors their.</a></p>
-                                                <div class="info">
-                                                    <div class="date"><p>08 July, 2012</p></div>
-                                                    <div class="category"><p><a href="#">People</a></p></div>
-                                                </div>
-                                            </div>
-                                        </li>
-
-                                        <li>
-                                            <div class="block_best_material_post">
-                                                <div class="f_pic"><a href="news_post.html" class="w_hover"><img src="images/pic_home_best_materials_6.jpg" alt="" /><span></span></a></div>
-                                                <p class="title"><a href="news_post.html">Publishing packages and web page editors their.</a></p>
-                                                <div class="info">
-                                                    <div class="date"><p>08 July, 2012</p></div>
-                                                    <div class="category"><p><a href="#">Technology</a></p></div>
-                                                </div>
-                                            </div>
-                                        </li>
-                                    </ul>
+                                            </li>
+                                        </ul>
+                                    </div>
                                 </div>
                             </div>
-
-                            <script type="text/javascript">
-                                $(function () {
-                                    $('#best_materials_slider').flexslider({
-                                        animation: 'slide',
-                                        controlNav: false,
-                                        directionNav: true,
-                                        animationLoop: false,
-                                        slideshow: false,
-                                        itemWidth: 213,
-                                        itemMargin: 0,
-                                        minItems: 1,
-                                        maxItems: 3,
-                                        move: 1,
-                                        useCSS: false
-                                    });
-                                });
-                            </script>
                         </div>
+                        <script type="text/javascript">
+                            $(function () {
+                                $('#best_materials_slider').flexslider({
+                                    animation: 'slide',
+                                    controlNav: false,
+                                    directionNav: true,
+                                    animationLoop: false,
+                                    slideshow: false,
+                                    itemWidth: 213,
+                                    itemMargin: 0,
+                                    minItems: 1,
+                                    maxItems: 3,
+                                    move: 1,
+                                    useCSS: false
+                                });
+                            });
+                        </script>
 
                         <div class="line_2" style="margin:20px 0px 0px;"></div>
 
@@ -664,71 +662,29 @@
 
                         <div class="separator" style="height:31px;"></div>
 
-                        <div class="block_popular_posts">
+                        <div class="block_popular_posts" id="popular">
                             <h4>热门看点</h4>
 
-                            <div class="article">
+                            <div class="article" v-for="list in popularArticle">
                                 <div class="pic">
                                     <a href="#" class="w_hover">
-                                        <img src="images/pic_popular_post_1.jpg" alt="" />
+                                        <img :src="list.photos[0].url" alt="" width="67" height="45"/>
                                         <span></span>
                                     </a>
                                 </div>
 
                                 <div class="text">
-                                    <p class="title"><a href="#">看点1</a></p>
-                                    <div class="date"><p>2018/12/19</p></div>
+                                    <p class="title"><a :href="'news_post.html#'+list.id">{{list.articleTitle}}</a></p>
+                                    <div class="date"><p>{{list.createTimeStr}}</p></div>
                                     <div class="icons">
                                         <ul>
-                                            <li><a href="#" class="views">41</a></li>
-                                            <li><a href="#" class="comments">22</a></li>
+                                            <li><a href="#" class="views">{{list.viewCount}}</a></li>
+                                            <li><a href="#" class="comments">{{list.commentCount}}</a></li>
                                         </ul>
                                     </div>
                                 </div>
                             </div>
                             <div class="line_3"></div>
-
-                            <div class="article">
-                                <div class="pic">
-                                    <a href="#" class="w_hover">
-                                        <img src="images/pic_popular_post_2.jpg" alt="" />
-                                        <span></span>
-                                    </a>
-                                </div>
-
-                                <div class="text">
-                                    <p class="title"><a href="#">看点2</a></p>
-                                    <div class="date"><p>2018/12/19</p></div>
-                                    <div class="icons">
-                                        <ul>
-                                            <li><a href="#" class="views">24</a></li>
-                                            <li><a href="#" class="comments">16</a></li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="line_3"></div>
-
-                            <div class="article">
-                                <div class="pic">
-                                    <a href="#" class="w_hover">
-                                        <img src="images/pic_popular_post_3.jpg" alt="" />
-                                        <span></span>
-                                    </a>
-                                </div>
-
-                                <div class="text">
-                                    <p class="title"><a href="#">看点3</a></p>
-                                    <div class="date"><p>2018/12/30</p></div>
-                                    <div class="icons">
-                                        <ul>
-                                            <li><a href="#" class="views">33</a></li>
-                                            <li><a href="#" class="comments">25</a></li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="line_2"></div>
                         </div>
 
                         <div class="separator" style="height:31px;"></div>

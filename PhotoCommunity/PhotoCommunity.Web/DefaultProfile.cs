@@ -24,6 +24,8 @@ namespace PhotoCommunity.Web
             CreateMap<UserRegisterRequest,UserModel>();
             CreateMap<UserLoginRequest, UserModel>();
             CreateMap<User,UserModel>();
+            CreateMap<UserModel, GetUserInfoResponse>()
+                .ForMember(dm=>dm.ViewCount,mo=>mo.Ignore());
 
             //标签
             CreateMap<Tag,TagModel>();

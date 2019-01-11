@@ -175,5 +175,32 @@ namespace PhotoCommunity.Service.Impl
             return _articleRepository.GetArticleCountByTagId(tagId);
         }
 
+        /// <summary>
+        /// 获取最受欢迎的文章列表
+        /// </summary>
+        /// <param name="count"></param>
+        /// <returns></returns>
+        public List<ArticleModel> GetMostPopularArticel(int count) {
+            var model = new ArticleAndIndexModel();
+            var article = _articleRepository.GetArticleOrderByViewCountDesc(count);
+            if (article != null)
+            {
+                return AutoMapper.Mapper.Map<List<ArticleModel>>(article);
+            }
+            else
+            {
+                return null;
+            }
+        }
+
+        /// <summary>
+        /// 根据用户名称获取文章查看次数
+        /// </summary>
+        /// <param name="userName"></param>
+        /// <returns></returns>
+        public int GetViewCountByUserName(string userName) {
+            return _articleRepository.GetArticleViewCountByUserName(userName);
+        }
+
     }
 }

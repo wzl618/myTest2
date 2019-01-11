@@ -30,5 +30,39 @@ namespace PhotoCommunity.Service
         /// <param name="userName"></param>
         /// <returns></returns>
         long GetUserIdByUserName(string userName);
+
+        /// <summary>
+        /// 获取全部用户信息
+        /// </summary>
+        /// <returns></returns>
+        List<UserModel> GetAllUser();
+
+        /// <summary>
+        /// 获取受欢迎的用户
+        /// </summary>
+        /// <param name="count"></param>
+        /// <returns></returns>
+        List<UserModel> GetPopularUser(int count);
+
+        /// <summary>
+        /// 根据用户Id获取用户信息
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <returns></returns>
+        UserModel GetUserById(long userId);
+
+        /// <summary>
+        /// 获取所有用户的数量
+        /// </summary>
+        /// <returns></returns>
+        int GetAllUserCount();
+
+        /// <summary>
+        /// 获取用户的分页数据
+        /// </summary>
+        /// <param name="pageSize"></param>
+        /// <param name="pageIndex"></param>
+        /// <returns></returns>
+        List<UserModel> GetAllUserInfoPage(int pageSize, int pageIndex);
     }
 }

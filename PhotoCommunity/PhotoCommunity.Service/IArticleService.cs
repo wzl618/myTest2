@@ -84,5 +84,19 @@ namespace PhotoCommunity.Service
         /// <returns></returns>
         int GetArticleCountByTagId(long tagId);
 
+        /// <summary>
+        /// 获取最受欢迎的文章列表
+        /// </summary>
+        /// <param name="count"></param>
+        /// <returns></returns>
+        List<ArticleModel> GetMostPopularArticel(int count);
+
+        /// <summary>
+        /// 根据用户名称获取文章查看次数
+        /// </summary>
+        /// <param name="userName"></param>
+        /// <returns></returns>
+        int GetViewCountByUserName(string userName);
+
     }
 }

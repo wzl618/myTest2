@@ -72,5 +72,19 @@ namespace PhotoCommunity.Repository.ArticleDomain.Repository
         /// <returns></returns>
         int GetArticleCountByTagId(long tagId);
 
+        /// <summary>
+        /// 根据查看次数排序获取文章
+        /// </summary>
+        /// <param name="count"></param>
+        /// <returns></returns>
+        List<Article> GetArticleOrderByViewCountDesc(int count);
+
+        /// <summary>
+        /// 根据用户名称获取文章查看次数
+        /// </summary>
+        /// <param name="userName"></param>
+        /// <returns></returns>
+        int GetArticleViewCountByUserName(string userName);
+
     }
 }

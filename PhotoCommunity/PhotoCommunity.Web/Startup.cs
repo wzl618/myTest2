@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -74,18 +75,29 @@ namespace PhotoCommunity.Web
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<ITagService, TagService>();
             services.AddScoped<IArticleService, ArticleService>();
-            services.AddScoped<IClassService,ClassService>();
-            services.AddScoped<IPhotoService,PhotoService>();
-            services.AddScoped<ICommentService,CommentService>();
+            services.AddScoped<IClassService, ClassService>();
+            services.AddScoped<IPhotoService, PhotoService>();
+            services.AddScoped<ICommentService, CommentService>();
 
             //注入Repository
-            services.AddScoped<IUserRepository,UserRepository>();
+            services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<ITagRepository, TagRepository>();
             services.AddScoped<IArticleRepository, ArticleRepository>();
-            services.AddScoped<IClassRepository,ClassRepository>();
-            services.AddScoped<IPhotoRepository,PhotoRepository>();
-            services.AddScoped<ICommentRepository,CommentRepository>();
-            services.AddScoped<IReplyCommentRepository,ReplyCommentRepository>();
+            services.AddScoped<IClassRepository, ClassRepository>();
+            services.AddScoped<IPhotoRepository, PhotoRepository>();
+            services.AddScoped<ICommentRepository, CommentRepository>();
+            services.AddScoped<IReplyCommentRepository, ReplyCommentRepository>();
+
+            //var builder = new ContainerBuilder();
+
+            //var assemblies = new Assembly[2];
+            //assemblies[0] = Assembly.LoadFrom(@"bin\Debug\netcoreapp2.1\PhotoCommunity.Repository.dll");
+            //assemblies[1] = Assembly.LoadFrom(@"bin\Debug\netcoreapp2.1\PhotoCommunity.Service.dll");
+            //builder.RegisterAssemblyTypes(assemblies)
+            //.Where(type => baseType.IsAssignableFrom(type) && !type.IsAbstract)
+            //.AsImplementedInterfaces().InstancePerLifetimeScope();
+            //IContainer container = builder.Build();
+            //DependencyResolver.SetResolver(new AutofacDependencyResolver(container));
 
             //注入editor
             services.AddUEditorService();

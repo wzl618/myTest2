@@ -109,7 +109,7 @@ namespace PhotoCommunity.Repository.ArticleDomain.Repository
         /// <param name="classId"></param>
         /// <returns></returns>
         public int GetArticleCountByClassId(long classId) {
-            return _myDbContext.ArticleRepository.Where(x => x.ClassId == classId).Count();
+            return _myDbContext.ArticleRepository.Where(x => x.ClassId == classId&&x.IsDelete==false).Count();
         }
 
         /// <summary>
@@ -132,7 +132,34 @@ namespace PhotoCommunity.Repository.ArticleDomain.Repository
         /// <param name="tagId"></param>
         /// <returns></returns>
         public int GetArticleCountByTagId(long tagId) {
-            return _myDbContext.ArticleRepository.Where(x => x.TagId == tagId).Count();
+            return _myDbContext.ArticleRepository.Where(x => x.TagId == tagId&&x.IsDelete==false).Count();
+        }
+
+        /// <summary>
+        /// 根据查看次数排序获取文章
+        /// </summary>
+        /// <param name="count"></param>
+        /// <returns></returns>
+        public List<Article> GetArticleOrderByViewCountDesc(int count) {
+            return _myDbContext.ArticleRepository.Where(x => x.IsDelete == false)
+                .OrderByDescending(x => x.ViewCount)
+                .Take(count).ToList();
+        }
+
+        /// <summary>
+        /// 根据用户名称获取文章查看次数
+        /// </summary>
+        /// <param name="userName"></param>
+        /// <returns></returns>
+        public int GetArticleViewCountByUserName(string userName) {
+            var article = _myDbContext.ArticleRepository.Where(x => x.UserName == userName && x.IsDelete == false).FirstOrDefault();
+            if (article == null)
+            {
+                return 0;
+            }
+            else {
+                return article.ViewCount;
+            }
         }
     }
 }

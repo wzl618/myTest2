@@ -62,5 +62,52 @@ namespace PhotoCommunity.Repository.UserDomain.Repository
         public long GetUserIdByUserName(string userName) {
             return _dbContext.UserRepository.Where(x => x.UserName == userName).FirstOrDefault().Id;
         }
+
+        /// <summary>
+        /// 获取全部用户
+        /// </summary>
+        /// <returns></returns>
+        public List<User> GetAllUser() {
+            return _dbContext.UserRepository.ToList();
+        }
+
+        /// <summary>
+        /// 根据用户名称获取用户信息
+        /// </summary>
+        /// <param name="userName"></param>
+        /// <returns></returns>
+        public User GetUserByUserName(string userName) {
+            return _dbContext.UserRepository.Where(x => x.UserName == userName).FirstOrDefault();
+        }
+
+        /// <summary>
+        /// 根据Id获取用户信息
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <returns></returns>
+        public User GetUserById(long userId) {
+            return _dbContext.UserRepository.Where(x => x.Id == userId).FirstOrDefault();
+        }
+
+        /// <summary>
+        /// 获取所有用户的数量
+        /// </summary>
+        /// <returns></returns>
+        public int GetAllUserCount() {
+            return _dbContext.UserRepository.Count();
+        }
+
+        /// <summary>
+        /// 获取用户的分页数据
+        /// </summary>
+        /// <param name="pageSize"></param>
+        /// <param name="pageIndex"></param>
+        /// <returns></returns>
+        public List<User> GetAllUserInfoPage(int pageSize, int pageIndex) {
+            return _dbContext.UserRepository
+              .OrderByDescending(x => x.Id)
+              .Skip(pageSize * (pageIndex - 1))
+              .Take(pageSize).ToList();
+        }
     }
 }

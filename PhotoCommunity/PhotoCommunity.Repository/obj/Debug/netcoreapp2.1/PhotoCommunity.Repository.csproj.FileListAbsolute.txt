@@ -34,3 +34,12 @@ F:\毕设\myphoto\myphoto\myTest2\PhotoCommunity\PhotoCommunity.Repository\obj\D
 F:\毕设\myphoto\myphoto\myTest2\PhotoCommunity\PhotoCommunity.Repository\obj\Debug\netcoreapp2.1\PhotoCommunity.Repository.AssemblyInfo.cs
 F:\毕设\myphoto\myphoto\myTest2\PhotoCommunity\PhotoCommunity.Repository\obj\Debug\netcoreapp2.1\PhotoCommunity.Repository.dll
 F:\毕设\myphoto\myphoto\myTest2\PhotoCommunity\PhotoCommunity.Repository\obj\Debug\netcoreapp2.1\PhotoCommunity.Repository.pdb
+E:\myphoto2\myTest2\PhotoCommunity\PhotoCommunity.Repository\bin\Debug\netcoreapp2.1\PhotoCommunity.Repository.deps.json
+E:\myphoto2\myTest2\PhotoCommunity\PhotoCommunity.Repository\bin\Debug\netcoreapp2.1\PhotoCommunity.Repository.dll
+E:\myphoto2\myTest2\PhotoCommunity\PhotoCommunity.Repository\bin\Debug\netcoreapp2.1\PhotoCommunity.Repository.pdb
+E:\myphoto2\myTest2\PhotoCommunity\PhotoCommunity.Repository\obj\Debug\netcoreapp2.1\PhotoCommunity.Repository.csprojAssemblyReference.cache
+E:\myphoto2\myTest2\PhotoCommunity\PhotoCommunity.Repository\obj\Debug\netcoreapp2.1\PhotoCommunity.Repository.csproj.CoreCompileInputs.cache
+E:\myphoto2\myTest2\PhotoCommunity\PhotoCommunity.Repository\obj\Debug\netcoreapp2.1\PhotoCommunity.Repository.AssemblyInfoInputs.cache
+E:\myphoto2\myTest2\PhotoCommunity\PhotoCommunity.Repository\obj\Debug\netcoreapp2.1\PhotoCommunity.Repository.AssemblyInfo.cs
+E:\myphoto2\myTest2\PhotoCommunity\PhotoCommunity.Repository\obj\Debug\netcoreapp2.1\PhotoCommunity.Repository.dll
+E:\myphoto2\myTest2\PhotoCommunity\PhotoCommunity.Repository\obj\Debug\netcoreapp2.1\PhotoCommunity.Repository.pdb

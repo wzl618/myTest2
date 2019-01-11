@@ -37,5 +37,39 @@ namespace PhotoCommunity.Repository.UserDomain.Repository
         /// <param name="userName"></param>
         /// <returns></returns>
         long GetUserIdByUserName(string userName);
+
+        /// <summary>
+        /// 获取全部用户
+        /// </summary>
+        /// <returns></returns>
+        List<User> GetAllUser();
+
+        /// <summary>
+        /// 根据用户名称获取用户信息
+        /// </summary>
+        /// <param name="userName"></param>
+        /// <returns></returns>
+        User GetUserByUserName(string userName);
+
+        /// <summary>
+        /// 根据Id获取用户信息
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <returns></returns>
+        User GetUserById(long userId);
+
+        /// <summary>
+        /// 获取所有用户的数量
+        /// </summary>
+        /// <returns></returns>
+        int GetAllUserCount();
+
+        /// <summary>
+        /// 获取用户的分页数据
+        /// </summary>
+        /// <param name="pageSize"></param>
+        /// <param name="pageIndex"></param>
+        /// <returns></returns>
+        List<User> GetAllUserInfoPage(int pageSize, int pageIndex);
     }
 }

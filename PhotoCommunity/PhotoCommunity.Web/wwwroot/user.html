@@ -122,9 +122,7 @@
             var content = new Vue({
                 el: '#main_content',
                 data: {
-                    tagName: '',
-                    articleList: [],
-                    tagId: 0,
+                    userList: [],
                     pageSize: 4,
                     pageIndex: 1,
                     pageIndexs: [],
@@ -132,72 +130,48 @@
                 },
                 //初始化加载
                 mounted: function () {
-                    this.getTagNameFirst();
-                    this.getArticle();
+                    this.getUserInfos();
                 },
                 methods: {
-                    getTagNameFirst: function () {
-                        this.$http.get('api/tag/GetTagById?tagId=' + location.hash.replace('#', ''))
-                            .then(
-                            function (res) {
-                                this.$data.tagName = res.body.tagName;
-                            },
-                            function () {
-                                alert("请求发送失败");
-                            }
-                            );
-                    },
-                    getTagName: function (id) {
-                        this.$http.get('api/tag/GetTagById?tagId=' + id)
+                    getUserInfos: function () {
+                        this.$http.get("/api/user/GetUserInfoPage?pageSize="+ this.$data.pageSize + "&pageIndex=" + this.$data.pageIndex)
                             .then(
                                 function (res) {
-                                    this.$data.tagName = res.body.tagName;
-                                },
-                                function () {
-                                    alert("请求发送失败");
-                                }
-                            );
-                    },
-                    getArticle: function () {
-                        this.getArticleTagId();
-                        this.$http.get("/api/article/GetArtilceByTagId?tagId=" + location.hash.replace('#', '') + "&pageSize=" + this.$data.pageSize + "&pageIndex=" + this.$data.pageIndex)
-                            .then(
-                                function (res) {
-                                    this.$data.articleList = res.body;
+                                    this.$data.userList = res.body;
                                 },
                                 function () {
                                     //alert("请求发送失败1");
                                 }
                             );
                     },
-                    //根据分页去获取文章信息
-                    getArticleIndex: function (index) {
-                        this.getArticleTagId();
-                        this.$http.get("/api/article/GetArtilceByTagId?tagId=" + location.hash.replace('#', '') + "&pageSize=" + this.$data.pageSize + "&pageIndex=" + index)
+                    //根据分页去获取用户信息
+                    getUserInfosIndex: function (index) {
+                        
+                        this.$http.get("/api/user/GetUserInfoPage?pageSize=" + this.$data.pageSize + "&pageIndex=" + index)
                             .then(
                                 function (res) {
                                     this.$data.activeClass = index;
-                                    this.$data.articleList = res.body;
+                                    this.$data.userList = res.body;
                                 },
                                 function () {
                                     //alert("请求发送失败2");
                                 }
                             );
                     },
-                    //上一页获取文章信息
-                    getArticleIndexPrev: function (index) {
-                        this.getArticleTagId();
+                    //上一页获取用户信息
+                    getUserInfosIndexPrev: function (index) {
                         if (index == 1) {
                             index = 1;
                         }
                         else {
                             index = index - 1;
                         }
-                        this.$http.get("/api/article/GetArtilceByTagId?tagId=" + location.hash.replace('#', '')+ "&pageSize=" + this.$data.pageSize + "&pageIndex=" + index)
+                        
+                        this.$http.get("/api/user/GetUserInfoPage?pageSize=" + this.$data.pageSize + "&pageIndex=" + index)
                             .then(
                                 function (res) {
                                     this.$data.activeClass = index;
-                                    this.$data.articleList = res.body;
+                                    this.$data.userList = res.body;
                                 },
                                 function () {
                                     //alert("请求发送失败3");
@@ -205,29 +179,29 @@
                             );
                     },
 
-                    //下一页获取文章信息
-                    getArticleIndexNext: function (index) {
-                        this.getArticleTagId();
+                    //下一页获取用户信息
+                    getUserInfosIndexNext: function (index) {
                         if (index == this.$data.pageIndexs[this.$data.pageIndexs.length - 1]) {
                             index = this.$data.pageIndexs[this.$data.pageIndexs.length - 1];
                         }
                         else {
                             index = index + 1;
                         }
-                        this.$http.get("/api/article/GetArtilceByTagId?tagId=" + location.hash.replace('#', '') + "&pageSize=" + this.$data.pageSize + "&pageIndex=" + index)
+                       
+                        this.$http.get("/api/user/GetUserInfoPage?pageSize=" + this.$data.pageSize + "&pageIndex=" + index)
                             .then(
                                 function (res) {
                                     this.$data.activeClass = index;
-                                    this.$data.articleList = res.body;
+                                    this.$data.userList = res.body;
                                 },
                                 function () {
                                     //alert("请求发送失败4");
                                 }
                             );
                     },
-
-                    getArticleCount: function () {
-                        this.$http.get("/api/article/GetArticleCountByTagId?tagId=" + location.hash.replace('#', ''))
+                    //获取用户数量
+                    getUserCount: function () {
+                        this.$http.get("/api/user/GetAllUserCount")
                             .then(
                                 function (res) {
                                     var list = new Array();
@@ -246,10 +220,6 @@
                                 }
                             );
 
-                    },
-
-                    getArticleTagId: function () {
-                        this.$data.tagId = location.hash.replace('#', '');
                     }
                 }
             });
@@ -278,9 +248,7 @@
             popular.getPopularArticle();
             login.getUserName();
             login.getAllTags();
-            content.getArticleCount();
-            content.getArticleTagId();
-            content.getArticle();
+            content.getUserCount();
         };
     </script>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
@@ -354,7 +322,7 @@
                                 <li class="big_dropdown">
                                     <a href="index.html">主页</a>
                                 </li>
-                                <li class="big_dropdown"><a href="user.html">用户信息</a></li>
+                                <li class="current_page_item"><a href="user.html">用户信息</a></li>
                                 <li class="big_dropdown" v-if="showUserName"><a href="upload.html">上传作品</a></li>
                                 <li v-for="tag in allTags" v-bind:class="activeTag == tag.id?'current_page_item':'big_dropdown'" data-content="business" v-on:click="getTagId(tag.id)"><a :href="'content.html#'+tag.id">{{tag.tagName}}</a></li>
                                 <li>
@@ -401,26 +369,19 @@
                     <div class="main_content" id="main_content">
                         <div class="separator" style="height:30px;"></div>
 
-                        <h2>{{tagName}}</h2>
+                        <h2>用户列表</h2>
 
-                        <p class="general_subtitle">以下是标签：{{tagName}}的内容</p>
+                        <p class="general_subtitle">以下是用户的列表</p>
 
                         <div class="line_4" style="margin:0px 0px 18px;"></div>
 
                         <div class="line_2" style="margin:21px 0px 21px;"></div>
 
                         <div class="block_topic_news">
-                            <article v-for="list in articleList" class="block_topic_post">
-                                <p class="title"><a :href="'news_post.html#'+list.id">{{list.articleTitle}}</a></p>
-                                <div class="f_pic"><a :href="'news_post.html#'+list.id" class="general_pic_hover scale"><img :src="list.photos[0].url" alt=""  width="256" height="151"/></a></div>
+                            <article v-for="list in userList" class="block_topic_post">
+                                <div class="f_pic"><a :href="'userInfo.html#'+list.id" class="general_pic_hover scale"><img src="images/pic_flickr_5.png" alt=""  width="256" height="151"/></a></div>
                                 <div class="info">
-                                    <div class="date"><p>{{list.createTimeStr}}</p></div>
-
-                                    <div class="r_part">
-                                        <div class="category"><p><a href="#">{{list.tagName}}</a></p></div>
-                                        <div class="category"><p><a href="#">{{list.className}}</a></p></div>
-                                        <a href="#" class="views">{{list.viewCount}}</a>
-                                    </div>
+                                    <p class="title" style="text-align:center"><a :href="'userInfo.html#'+list.id">{{list.userName}}</a></p>
                                 </div>
                             </article>
                         </div>
@@ -428,12 +389,12 @@
                         <div class="line_2" style="margin:25px 0px 25px;"></div>
 
                         <div class="block_pager">
-                            <a :href="'content.html#'+tagId" class="prev" v-on:click="getArticleIndexPrev(activeClass)">上一页</a>
-                            <a :href="'content.html#'+tagId" class="next" v-on:click="getArticleIndexNext(activeClass)">下一页</a>
+                            <a :href="'user.html#'+activeClass" class="prev" v-on:click="getUserInfosIndexPrev(activeClass)">上一页</a>
+                            <a :href="'user.html#'+activeClass" class="next" v-on:click="getUserInfosIndexNext(activeClass)">下一页</a>
 
                             <div class="pages">
                                 <ul>
-                                    <li v-for="pageIndex in pageIndexs" v-bind:class="activeClass == pageIndex?'current':''"><a :href="'content.html#'+tagId" v-on:click="getArticleIndex(pageIndex)">{{pageIndex}}</a></li>
+                                    <li v-for="pageIndex in pageIndexs" v-bind:class="activeClass == pageIndex?'current':''"><a :href="'user.html#'+pageIndex" v-on:click="getUserInfosIndex(pageIndex)">{{pageIndex}}</a></li>
                                 </ul>
                             </div>
 

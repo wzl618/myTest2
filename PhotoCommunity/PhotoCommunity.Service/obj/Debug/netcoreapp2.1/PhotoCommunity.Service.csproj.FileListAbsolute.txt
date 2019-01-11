@@ -46,3 +46,15 @@ F:\毕设\myphoto\myphoto\myTest2\PhotoCommunity\PhotoCommunity.Service\obj\Debu
 F:\毕设\myphoto\myphoto\myTest2\PhotoCommunity\PhotoCommunity.Service\obj\Debug\netcoreapp2.1\PhotoCommunity.Service.csproj.CopyComplete
 F:\毕设\myphoto\myphoto\myTest2\PhotoCommunity\PhotoCommunity.Service\obj\Debug\netcoreapp2.1\PhotoCommunity.Service.dll
 F:\毕设\myphoto\myphoto\myTest2\PhotoCommunity\PhotoCommunity.Service\obj\Debug\netcoreapp2.1\PhotoCommunity.Service.pdb
+E:\myphoto2\myTest2\PhotoCommunity\PhotoCommunity.Service\bin\Debug\netcoreapp2.1\PhotoCommunity.Service.deps.json
+E:\myphoto2\myTest2\PhotoCommunity\PhotoCommunity.Service\bin\Debug\netcoreapp2.1\PhotoCommunity.Service.dll
+E:\myphoto2\myTest2\PhotoCommunity\PhotoCommunity.Service\bin\Debug\netcoreapp2.1\PhotoCommunity.Service.pdb
+E:\myphoto2\myTest2\PhotoCommunity\PhotoCommunity.Service\bin\Debug\netcoreapp2.1\PhotoCommunity.Repository.dll
+E:\myphoto2\myTest2\PhotoCommunity\PhotoCommunity.Service\bin\Debug\netcoreapp2.1\PhotoCommunity.Repository.pdb
+E:\myphoto2\myTest2\PhotoCommunity\PhotoCommunity.Service\obj\Debug\netcoreapp2.1\PhotoCommunity.Service.csprojAssemblyReference.cache
+E:\myphoto2\myTest2\PhotoCommunity\PhotoCommunity.Service\obj\Debug\netcoreapp2.1\PhotoCommunity.Service.csproj.CoreCompileInputs.cache
+E:\myphoto2\myTest2\PhotoCommunity\PhotoCommunity.Service\obj\Debug\netcoreapp2.1\PhotoCommunity.Service.AssemblyInfoInputs.cache
+E:\myphoto2\myTest2\PhotoCommunity\PhotoCommunity.Service\obj\Debug\netcoreapp2.1\PhotoCommunity.Service.AssemblyInfo.cs
+E:\myphoto2\myTest2\PhotoCommunity\PhotoCommunity.Service\obj\Debug\netcoreapp2.1\PhotoCommunity.Service.csproj.CopyComplete
+E:\myphoto2\myTest2\PhotoCommunity\PhotoCommunity.Service\obj\Debug\netcoreapp2.1\PhotoCommunity.Service.dll
+E:\myphoto2\myTest2\PhotoCommunity\PhotoCommunity.Service\obj\Debug\netcoreapp2.1\PhotoCommunity.Service.pdb

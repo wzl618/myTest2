@@ -105,6 +105,13 @@
             <param name="tagId"></param>
             <returns></returns>
         </member>
+        <member name="M:PhotoCommunity.Web.Api.ArticleController.GetMostPopularArticle(System.Int32)">
+            <summary>
+            获取最受欢迎的文章
+            </summary>
+            <param name="count"></param>
+            <returns></returns>
+        </member>
         <member name="T:PhotoCommunity.Web.Api.ClassController">
             <summary>
             大类
@@ -229,11 +236,12 @@
             
             </summary>
         </member>
-        <member name="M:PhotoCommunity.Web.Api.UserController.#ctor(PhotoCommunity.Service.IUserService)">
+        <member name="M:PhotoCommunity.Web.Api.UserController.#ctor(PhotoCommunity.Service.IUserService,PhotoCommunity.Service.IArticleService)">
             <summary>
             构造函数注入
             </summary>
             <param name="userService"></param>
+            <param name="articleService"></param>
         </member>
         <member name="M:PhotoCommunity.Web.Api.UserController.UserRegister(PhotoCommunity.Web.Models.Request.UserRegisterRequest)">
             <summary>
@@ -265,6 +273,40 @@
             <summary>
             检查用户名是否重复
             </summary>
+            <returns></returns>
+        </member>
+        <member name="M:PhotoCommunity.Web.Api.UserController.GetUserInfos">
+            <summary>
+            获取所有用户信息
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:PhotoCommunity.Web.Api.UserController.GetPopularUserInfos(System.Int32)">
+            <summary>
+            获取受欢迎的用户信息
+            </summary>
+            <param name="count"></param>
+            <returns></returns>
+        </member>
+        <member name="M:PhotoCommunity.Web.Api.UserController.GetUserInfoDetail(System.Int64)">
+            <summary>
+            根据用户Id获取用户的详细信息
+            </summary>
+            <param name="userId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:PhotoCommunity.Web.Api.UserController.GetAllUserCount">
+            <summary>
+            获取所有用户的数量
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:PhotoCommunity.Web.Api.UserController.GetUserInfoPage(System.Int32,System.Int32)">
+            <summary>
+            获取用户分页信息
+            </summary>
+            <param name="pageSize"></param>
+            <param name="pageIndex"></param>
             <returns></returns>
         </member>
         <member name="T:PhotoCommunity.Web.DefaultProfile">
@@ -755,6 +797,36 @@
         <member name="P:PhotoCommunity.Web.Models.Response.GetCommentResponse.ReplyComments">
             <summary>
             回复评论集合
+            </summary>
+        </member>
+        <member name="T:PhotoCommunity.Web.Models.Response.GetUserInfoResponse">
+            <summary>
+            获取用户信息Response
+            </summary>
+        </member>
+        <member name="P:PhotoCommunity.Web.Models.Response.GetUserInfoResponse.Id">
+            <summary>
+            用户ID
+            </summary>
+        </member>
+        <member name="P:PhotoCommunity.Web.Models.Response.GetUserInfoResponse.UserName">
+            <summary>
+            用户姓名
+            </summary>
+        </member>
+        <member name="P:PhotoCommunity.Web.Models.Response.GetUserInfoResponse.Telephone">
+            <summary>
+            用户手机号码
+            </summary>
+        </member>
+        <member name="P:PhotoCommunity.Web.Models.Response.GetUserInfoResponse.UserContext">
+            <summary>
+            用户简介
+            </summary>
+        </member>
+        <member name="P:PhotoCommunity.Web.Models.Response.GetUserInfoResponse.ViewCount">
+            <summary>
+            用户文章被浏览次数
             </summary>
         </member>
         <member name="T:PhotoCommunity.Web.Models.Response.PhotoResponse">
